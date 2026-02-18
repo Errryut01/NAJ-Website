@@ -1,0 +1,17 @@
+{
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "LINKEDIN_CLIENT_ID": "@linkedin_client_id",
+    "LINKEDIN_CLIENT_SECRET": "@linkedin_client_secret",
+    "GROK_API_KEY": "@grok_api_key",
+    "INDEED_API_KEY": "@indeed_api_key",
+    "GLASSDOOR_API_KEY": "@glassdoor_api_key",
+    "RESEND_API_KEY": "@resend_api_key"
+  }
+}

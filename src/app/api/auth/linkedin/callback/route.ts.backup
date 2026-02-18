@@ -1,0 +1,241 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const code = searchParams.get('code')
+    const state = searchParams.get('state') // This should be the userId
+    const error = searchParams.get('error')
+
+    console.log('=== LINKEDIN OAUTH CALLBACK START ===')
+    console.log('LinkedIn OAuth Callback Debug:', {
+      code: code ? 'present' : 'missing',
+      codeValue: code ? code.substring(0, 10) + '...' : 'missing',
+      codeLength: code ? code.length : 0,
+      state,
+      error,
+      url: request.url,
+      timestamp: new Date().toISOString(),
+      allParams: Object.fromEntries(searchParams.entries()),
+      userAgent: request.headers.get('user-agent'),
+      referer: request.headers.get('referer')
+    })
+
+    if (error) {
+      console.log('LinkedIn OAuth Error:', error)
+      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}?error=${error}&details=${encodeURIComponent('LinkedIn OAuth error: ' + error)}`)
+    }
+
+    if (!code || !state) {
+      console.log('Missing parameters:', { code: !!code, state: !!state })
+      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}?error=missing_parameters&details=${encodeURIComponent('Missing code or state parameter')}`)
+    }
+
+    // Exchange code for access token
+    console.log('Exchanging code for access token...')
+    console.log('Token exchange request params:', {
+      grant_type: 'authorization_code',
+      code: code,
+      redirect_uri: 'http://localhost:3000/api/auth/linkedin/callback',
+      client_id: process.env.LINKEDIN_CLIENT_ID,
+      client_secret: process.env.LINKEDIN_CLIENT_SECRET ? 'present' : 'missing',
+      timestamp: new Date().toISOString(),
+      codeLength: code.length
+    })
+    
+    // Log the exact request body being sent
+    const requestBody = new URLSearchParams({
+      grant_type: 'authorization_code',
+      code: code,
+      client_id: process.env.LINKEDIN_CLIENT_ID!,
+      client_secret: process.env.LINKEDIN_CLIENT_SECRET!,
+      redirect_uri: 'http://localhost:3000/api/auth/linkedin/callback',
+    })
+    console.log('Exact request body:', requestBody.toString())
+    
+    // Use the correct OpenID Connect token endpoint
+    const tokenResponse = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code,
+        client_id: process.env.LINKEDIN_CLIENT_ID!,
+        client_secret: process.env.LINKEDIN_CLIENT_SECRET!,
+        redirect_uri: 'http://localhost:3000/api/auth/linkedin/callback',
+      }),
+    })
+
+    console.log('Token response status:', tokenResponse.status)
+    console.log('Token response headers:', Object.fromEntries(tokenResponse.headers.entries()))
+    
+    const tokenData = await tokenResponse.json()
+    console.log('Token response data:', tokenData)
+
+    if (!tokenData.access_token) {
+      console.log('No access token received:', tokenData)
+      const errorDetails = {
+        error: 'token_exchange_failed',
+        details: tokenData,
+        message: 'Failed to exchange authorization code for access token',
+        responseStatus: tokenResponse.status,
+        responseHeaders: Object.fromEntries(tokenResponse.headers.entries())
+      }
+      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}?error=token_exchange_failed&details=${encodeURIComponent(JSON.stringify(errorDetails))}`)
+    }
+
+    console.log('Token exchange successful:', {
+      hasAccessToken: !!tokenData.access_token,
+      hasIdToken: !!tokenData.id_token,
+      hasRefreshToken: !!tokenData.refresh_token,
+      expiresIn: tokenData.expires_in,
+      tokenType: tokenData.token_type
+    })
+
+    // Get user profile from LinkedIn using the ID token (which contains user info)
+    let profileData = {};
+    try {
+      // Try the LinkedIn API first
+      const profileResponse = await fetch('https://api.linkedin.com/v2/me', {
+        headers: {
+          'Authorization': `Bearer ${tokenData.access_token}`,
+        },
+      })
+      
+      if (profileResponse.ok) {
+        profileData = await profileResponse.json()
+        console.log('LinkedIn API Profile Data:', profileData)
+      } else {
+        console.log('LinkedIn API failed with status:', profileResponse.status)
+        throw new Error(`LinkedIn API failed: ${profileResponse.status}`)
+      }
+    } catch (error) {
+      console.log('LinkedIn API failed, using ID token data:', error)
+      // If LinkedIn API fails, extract data from ID token
+      if (tokenData.id_token) {
+        try {
+          const payload = JSON.parse(atob(tokenData.id_token.split('.')[1]))
+          console.log('ID Token payload:', payload)
+          profileData = {
+            given_name: payload.given_name,
+            family_name: payload.family_name,
+            email: payload.email,
+            picture: payload.picture,
+            name: payload.name,
+            // Also try alternative field names
+            localizedFirstName: payload.given_name,
+            localizedLastName: payload.family_name,
+            emailAddress: payload.email,
+            profilePictureUrl: payload.picture
+          }
+          console.log('Extracted from ID token:', profileData)
+        } catch (e) {
+          console.log('Failed to parse ID token:', e)
+        }
+      }
+    }
+
+    // Extract profile data with better fallbacks
+    const extractedData = {
+      email: profileData.emailAddress || profileData.email || `${state}@example.com`,
+      firstName: profileData.localizedFirstName || profileData.given_name || 'User',
+      lastName: profileData.localizedLastName || profileData.family_name || 'Name',
+      fullName: profileData.name || `${profileData.given_name || 'User'} ${profileData.family_name || 'Name'}`.trim(),
+      picture: profileData.profilePictureUrl || profileData.picture || null
+    }
+    
+    console.log('Extracted profile data for database:', extractedData)
+
+    // First, create or update the User using email as the unique identifier
+    console.log('Creating/updating User with email:', extractedData.email)
+    const user = await prisma.user.upsert({
+      where: { email: extractedData.email },
+      update: {
+        id: state, // Update the ID to the current state
+        name: extractedData.fullName,
+        profilePictureUrl: extractedData.picture,
+      },
+      create: {
+        id: state,
+        email: extractedData.email,
+        name: extractedData.fullName,
+        profilePictureUrl: extractedData.picture,
+      },
+    })
+    console.log('User created/updated:', { id: user.id, email: user.email, name: user.name })
+
+    // Then create or update the UserProfile using the user's actual ID
+    console.log('Creating/updating UserProfile for userId:', user.id)
+    await prisma.userProfile.upsert({
+      where: { userId: user.id },
+      update: {
+        firstName: extractedData.firstName,
+        lastName: extractedData.lastName,
+        phone: null,
+        location: null,
+        summary: null,
+        currentTitle: null,
+        currentCompany: null,
+        yearsExperience: null,
+        skills: null,
+        experience: null,
+        education: null,
+        resumeTemplate: null,
+        coverLetterTemplate: null,
+      },
+      create: {
+        userId: user.id,
+        firstName: extractedData.firstName,
+        lastName: extractedData.lastName,
+        phone: null,
+        location: null,
+        summary: null,
+        currentTitle: null,
+        currentCompany: null,
+        yearsExperience: null,
+        skills: null,
+        experience: null,
+        education: null,
+        resumeTemplate: null,
+        coverLetterTemplate: null,
+      },
+    })
+    console.log('UserProfile created/updated successfully')
+
+    // Save LinkedIn credentials to database using the user's actual ID
+    console.log('Creating/updating LinkedInCredentials for userId:', user.id)
+    await prisma.linkedInCredentials.upsert({
+      where: { userId: user.id },
+      update: {
+        accessToken: tokenData.access_token,
+        refreshToken: tokenData.refresh_token,
+        expiresAt: tokenData.expires_in ? new Date(Date.now() + tokenData.expires_in * 1000) : null,
+      },
+      create: {
+        userId: user.id,
+        accessToken: tokenData.access_token,
+        refreshToken: tokenData.refresh_token,
+        expiresAt: tokenData.expires_in ? new Date(Date.now() + tokenData.expires_in * 1000) : null,
+      },
+    })
+    console.log('LinkedInCredentials created/updated successfully')
+
+    console.log('Redirecting to success page with userId:', user.id)
+    return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/?linkedin_success=true&userId=${user.id}`)
+  } catch (error) {
+    console.error('=== LINKEDIN OAUTH CALLBACK ERROR ===')
+    console.error('Error handling LinkedIn callback:', error)
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      timestamp: new Date().toISOString()
+    })
+    
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+    return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/?error=callback_failed&details=${encodeURIComponent(errorMessage)}`)
+  }
+}

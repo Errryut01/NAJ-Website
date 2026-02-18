@@ -1,0 +1,770 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { User, Briefcase, GraduationCap, Award, Save, Download } from 'lucide-react'
+import LinkedInProfile from './LinkedInProfile'
+import { useUser } from '@/contexts/UserContext'
+
+interface ProfileSetupProps {
+  onComplete: () => void
+}
+
+export default function ProfileSetup({ onComplete }: ProfileSetupProps) {
+  const { user, profile, isConnected, refreshProfile } = useUser()
+  const [currentStep, setCurrentStep] = useState(0)
+  const [autofillLoading, setAutofillLoading] = useState(false)
+  const [autofillSuccess, setAutofillSuccess] = useState(false)
+  const [autofilledFields, setAutofilledFields] = useState<Set<string>>(new Set())
+  
+  // Input styling utility
+  const inputClass = "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900 bg-white placeholder-gray-500"
+  const textareaClass = "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900 bg-white placeholder-gray-500"
+  
+  // Helper function to render field with autofill indicator
+  const renderFieldWithIndicator = (fieldName: string, children: React.ReactNode) => {
+    const isAutofilled = autofilledFields.has(fieldName)
+    return (
+      <div className="relative">
+        {children}
+        {isAutofilled && (
+          <div className="absolute -top-1 -right-1">
+            <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              ✓ Auto
+            </span>
+          </div>
+        )}
+      </div>
+    )
+  }
+  
+  const [formData, setFormData] = useState({
+    // Personal Information
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    location: '',
+    summary: '',
+    
+    // Professional Information
+    currentTitle: '',
+    currentCompany: '',
+    yearsExperience: 0,
+    
+    // Skills
+    skills: [] as string[],
+    
+    // Experience
+    experience: [] as any[],
+    
+    // Education
+    education: [] as any[],
+    
+    // Preferences
+    jobTitles: [] as string[],
+    companies: [] as string[],
+    locations: [] as string[],
+    salaryMin: 0,
+    salaryMax: 0,
+    jobTypes: [] as string[],
+    remoteWork: false,
+    maxApplicationsPerMonth: 10,
+    autoApply: false,
+    autoConnect: false,
+    autoMessage: false,
+    connectionMessage: '',
+    followUpMessage: ''
+  })
+
+  // No need to fetch LinkedIn data - it's already in the context
+
+  // Autofill form with LinkedIn data
+  const handleAutofill = () => {
+    if (!profile) return
+
+    setAutofillLoading(true)
+
+    // Map LinkedIn data to form fields and track which fields are being filled
+    const autofillData: any = {}
+    const filledFields = new Set<string>()
+
+    // Personal Information
+    if (profile.firstName) { autofillData.firstName = profile.firstName; filledFields.add('firstName') }
+    if (profile.lastName) { autofillData.lastName = profile.lastName; filledFields.add('lastName') }
+    if (user?.email) { autofillData.email = user.email; filledFields.add('email') }
+    if (profile.phone) { autofillData.phone = profile.phone; filledFields.add('phone') }
+    if (profile.location) { autofillData.location = profile.location; filledFields.add('location') }
+    if (profile.summary) { autofillData.summary = profile.summary; filledFields.add('summary') }
+    
+    // Professional Information
+    if (profile.currentTitle) { autofillData.currentTitle = profile.currentTitle; filledFields.add('currentTitle') }
+    if (profile.currentCompany) { autofillData.currentCompany = profile.currentCompany; filledFields.add('currentCompany') }
+    if (profile.yearsExperience) { autofillData.yearsExperience = profile.yearsExperience; filledFields.add('yearsExperience') }
+    
+    // Skills (parse JSON if it's a string)
+    if (profile.skills) { 
+      autofillData.skills = typeof profile.skills === 'string' ? JSON.parse(profile.skills) : profile.skills
+      filledFields.add('skills')
+    }
+    
+    // Experience (parse JSON if it's a string)
+    if (profile.experience) { 
+      autofillData.experience = typeof profile.experience === 'string' ? JSON.parse(profile.experience) : profile.experience
+      filledFields.add('experience')
+    }
+    
+    // Education (parse JSON if it's a string)
+    if (profile.education) { 
+      autofillData.education = typeof profile.education === 'string' ? JSON.parse(profile.education) : profile.education
+      filledFields.add('education')
+    }
+
+    // Update form data with autofilled values
+    setFormData(prev => ({ ...prev, ...autofillData }))
+    setAutofilledFields(filledFields)
+    
+    setTimeout(() => {
+      setAutofillLoading(false)
+      setAutofillSuccess(true)
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+        setAutofillSuccess(false)
+      }, 3000)
+    }, 1000) // Show loading for 1 second
+  }
+
+  const steps = [
+    { id: 'personal', title: 'Personal Information', icon: User },
+    { id: 'professional', title: 'Professional Info', icon: Briefcase },
+    { id: 'skills', title: 'Skills & Experience', icon: Award },
+    { id: 'education', title: 'Education', icon: GraduationCap },
+    { id: 'preferences', title: 'Job Preferences', icon: Briefcase }
+  ]
+
+  const handleInputChange = (field: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
+
+  const handleArrayInputChange = (field: string, value: string) => {
+    const items = value.split(',').map(item => item.trim()).filter(item => item)
+    setFormData(prev => ({
+      ...prev,
+      [field]: items
+    }))
+  }
+
+  const addExperience = () => {
+    setFormData(prev => ({
+      ...prev,
+      experience: [...prev.experience, {
+        id: Date.now().toString(),
+        title: '',
+        company: '',
+        location: '',
+        startDate: '',
+        endDate: '',
+        current: false,
+        description: '',
+        achievements: []
+      }]
+    }))
+  }
+
+  const updateExperience = (index: number, field: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      experience: prev.experience.map((exp, i) => 
+        i === index ? { ...exp, [field]: value } : exp
+      )
+    }))
+  }
+
+  const removeExperience = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      experience: prev.experience.filter((_, i) => i !== index)
+    }))
+  }
+
+  const addEducation = () => {
+    setFormData(prev => ({
+      ...prev,
+      education: [...prev.education, {
+        id: Date.now().toString(),
+        institution: '',
+        degree: '',
+        field: '',
+        startDate: '',
+        endDate: '',
+        gpa: 0,
+        description: ''
+      }]
+    }))
+  }
+
+  const updateEducation = (index: number, field: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      education: prev.education.map((edu, i) => 
+        i === index ? { ...edu, [field]: value } : edu
+      )
+    }))
+  }
+
+  const removeEducation = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      education: prev.education.filter((_, i) => i !== index)
+    }))
+  }
+
+  const handleSubmit = async () => {
+    try {
+      // Here you would save the profile data to the database
+      console.log('Saving profile:', formData)
+      onComplete()
+    } catch (error) {
+      console.error('Error saving profile:', error)
+    }
+  }
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 0: // Personal Information
+        return (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">First Name</label>
+                {renderFieldWithIndicator('firstName', (
+                  <input
+                    type="text"
+                    value={formData.firstName}
+                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    className={inputClass}
+                    placeholder="Enter your first name"
+                  />
+                ))}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                {renderFieldWithIndicator('lastName', (
+                  <input
+                    type="text"
+                    value={formData.lastName}
+                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    className={inputClass}
+                    placeholder="Enter your last name"
+                  />
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Email</label>
+              {renderFieldWithIndicator('email', (
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  className={inputClass}
+                  placeholder="Enter your email address"
+                />
+              ))}
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Phone</label>
+                <input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => handleInputChange('phone', e.target.value)}
+                  className={inputClass}
+                  placeholder="Enter your phone number"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Location</label>
+                <input
+                  type="text"
+                  value={formData.location}
+                  onChange={(e) => handleInputChange('location', e.target.value)}
+                  className={inputClass}
+                  placeholder="Enter your location (e.g., San Francisco, CA)"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Professional Summary</label>
+              <textarea
+                rows={4}
+                value={formData.summary}
+                onChange={(e) => handleInputChange('summary', e.target.value)}
+                className={textareaClass}
+                placeholder="Brief summary of your professional background and key strengths..."
+              />
+            </div>
+          </div>
+        )
+
+      case 1: // Professional Information
+        return (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Current Title</label>
+                <input
+                  type="text"
+                  value={formData.currentTitle}
+                  onChange={(e) => handleInputChange('currentTitle', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Current Company</label>
+                <input
+                  type="text"
+                  value={formData.currentCompany}
+                  onChange={(e) => handleInputChange('currentCompany', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Years of Experience</label>
+              <input
+                type="number"
+                value={formData.yearsExperience}
+                onChange={(e) => handleInputChange('yearsExperience', parseInt(e.target.value) || 0)}
+                className={textareaClass}
+              />
+            </div>
+          </div>
+        )
+
+      case 2: // Skills & Experience
+        return (
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Skills (comma-separated)</label>
+              <input
+                type="text"
+                value={formData.skills.join(', ')}
+                onChange={(e) => handleArrayInputChange('skills', e.target.value)}
+                className={textareaClass}
+                placeholder="JavaScript, React, Node.js, Python, etc."
+              />
+            </div>
+            
+            <div>
+              <div className="flex justify-between items-center">
+                <label className="block text-sm font-medium text-gray-700">Work Experience</label>
+                <button
+                  type="button"
+                  onClick={addExperience}
+                  className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+                >
+                  Add Experience
+                </button>
+              </div>
+              <div className="mt-4 space-y-4">
+                {formData.experience.map((exp, index) => (
+                  <div key={exp.id} className="border border-gray-200 rounded-lg p-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">Job Title</label>
+                        <input
+                          type="text"
+                          value={exp.title}
+                          onChange={(e) => updateExperience(index, 'title', e.target.value)}
+                          className={inputClass}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">Company</label>
+                        <input
+                          type="text"
+                          value={exp.company}
+                          onChange={(e) => updateExperience(index, 'company', e.target.value)}
+                          className={inputClass}
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">Location</label>
+                        <input
+                          type="text"
+                          value={exp.location}
+                          onChange={(e) => updateExperience(index, 'location', e.target.value)}
+                          className={inputClass}
+                        />
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={exp.current}
+                          onChange={(e) => updateExperience(index, 'current', e.target.checked)}
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        />
+                        <label className="ml-2 block text-sm text-gray-900">Currently working here</label>
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <label className="block text-sm font-medium text-gray-700">Description</label>
+                      <textarea
+                        rows={3}
+                        value={exp.description}
+                        onChange={(e) => updateExperience(index, 'description', e.target.value)}
+                        className={inputClass}
+                      />
+                    </div>
+                    <div className="mt-4 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => removeExperience(index)}
+                        className="text-red-600 hover:text-red-500 text-sm font-medium"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+
+      case 3: // Education
+        return (
+          <div className="space-y-6">
+            <div>
+              <div className="flex justify-between items-center">
+                <label className="block text-sm font-medium text-gray-700">Education</label>
+                <button
+                  type="button"
+                  onClick={addEducation}
+                  className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+                >
+                  Add Education
+                </button>
+              </div>
+              <div className="mt-4 space-y-4">
+                {formData.education.map((edu, index) => (
+                  <div key={edu.id} className="border border-gray-200 rounded-lg p-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">Institution</label>
+                        <input
+                          type="text"
+                          value={edu.institution}
+                          onChange={(e) => updateEducation(index, 'institution', e.target.value)}
+                          className={inputClass}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">Degree</label>
+                        <input
+                          type="text"
+                          value={edu.degree}
+                          onChange={(e) => updateEducation(index, 'degree', e.target.value)}
+                          className={inputClass}
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">Field of Study</label>
+                        <input
+                          type="text"
+                          value={edu.field}
+                          onChange={(e) => updateEducation(index, 'field', e.target.value)}
+                          className={inputClass}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">GPA (optional)</label>
+                        <input
+                          type="number"
+                          step="0.1"
+                          value={edu.gpa}
+                          onChange={(e) => updateEducation(index, 'gpa', parseFloat(e.target.value) || 0)}
+                          className={inputClass}
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-4 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => removeEducation(index)}
+                        className="text-red-600 hover:text-red-500 text-sm font-medium"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+
+      case 4: // Job Preferences
+        return (
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Target Job Titles (comma-separated)</label>
+              <input
+                type="text"
+                value={formData.jobTitles.join(', ')}
+                onChange={(e) => handleArrayInputChange('jobTitles', e.target.value)}
+                className={textareaClass}
+                placeholder="Software Engineer, Frontend Developer, Full Stack Developer"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Target Companies (comma-separated)</label>
+              <input
+                type="text"
+                value={formData.companies.join(', ')}
+                onChange={(e) => handleArrayInputChange('companies', e.target.value)}
+                className={textareaClass}
+                placeholder="Google, Microsoft, Apple, Amazon"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Preferred Locations (comma-separated)</label>
+              <input
+                type="text"
+                value={formData.locations.join(', ')}
+                onChange={(e) => handleArrayInputChange('locations', e.target.value)}
+                className={textareaClass}
+                placeholder="San Francisco, CA, New York, NY, Remote"
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Minimum Salary</label>
+                <input
+                  type="number"
+                  value={formData.salaryMin}
+                  onChange={(e) => handleInputChange('salaryMin', parseInt(e.target.value) || 0)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Maximum Salary</label>
+                <input
+                  type="number"
+                  value={formData.salaryMax}
+                  onChange={(e) => handleInputChange('salaryMax', parseInt(e.target.value) || 0)}
+                  className={inputClass}
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Job Types (comma-separated)</label>
+              <input
+                type="text"
+                value={formData.jobTypes.join(', ')}
+                onChange={(e) => handleArrayInputChange('jobTypes', e.target.value)}
+                className={textareaClass}
+                placeholder="Full-time, Part-time, Contract, Remote"
+              />
+            </div>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                checked={formData.remoteWork}
+                onChange={(e) => handleInputChange('remoteWork', e.target.checked)}
+                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              />
+              <label className="ml-2 block text-sm text-gray-900">Open to remote work</label>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Max Applications Per Month</label>
+              <input
+                type="number"
+                value={formData.maxApplicationsPerMonth}
+                onChange={(e) => handleInputChange('maxApplicationsPerMonth', parseInt(e.target.value) || 10)}
+                className={textareaClass}
+              />
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={formData.autoApply}
+                  onChange={(e) => handleInputChange('autoApply', e.target.checked)}
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                />
+                <label className="ml-2 block text-sm text-gray-900">Enable automatic job applications</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={formData.autoConnect}
+                  onChange={(e) => handleInputChange('autoConnect', e.target.checked)}
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                />
+                <label className="ml-2 block text-sm text-gray-900">Automatically send LinkedIn connection requests</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={formData.autoMessage}
+                  onChange={(e) => handleInputChange('autoMessage', e.target.checked)}
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                />
+                <label className="ml-2 block text-sm text-gray-900">Automatically send LinkedIn messages</label>
+              </div>
+            </div>
+          </div>
+        )
+
+      default:
+        return null
+    }
+  }
+
+  return (
+    <div className="p-6">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-900">Complete Your Profile</h2>
+        <p className="mt-2 text-sm text-gray-600">
+          Set up your profile to start automating your job search
+        </p>
+      </div>
+
+      {/* LinkedIn Profile Display */}
+      <div className="mb-8">
+        <LinkedInProfile userId={user?.id || ''} />
+      </div>
+
+      {/* Autofill Button */}
+      {isConnected && (
+        <div className="mb-8">
+          {autofillSuccess ? (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-green-800">Profile Autofilled Successfully!</h3>
+                  <p className="text-sm text-green-600 mt-1">
+                    Your profile has been populated with data from your LinkedIn account. You can review and edit the information below.
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-medium text-blue-800">LinkedIn Data Available</h3>
+                  <p className="text-sm text-blue-600 mt-1">
+                    Click the button below to automatically fill in your profile with data from your LinkedIn account.
+                  </p>
+                </div>
+                <button
+                  onClick={handleAutofill}
+                  disabled={autofillLoading}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {autofillLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Autofilling...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-4 h-4 mr-2" />
+                      Autofill from LinkedIn
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Progress Steps */}
+      <div className="mb-8">
+        <nav aria-label="Progress">
+          <ol className="flex items-center">
+            {steps.map((step, stepIdx) => {
+              const Icon = step.icon
+              return (
+                <li key={step.id} className={`${stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : ''} relative`}>
+                  <div className="flex items-center">
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                      currentStep >= stepIdx
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-gray-300 text-gray-500'
+                    }`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <div className="ml-4 min-w-0">
+                      <div className={`text-sm font-medium ${
+                        currentStep >= stepIdx ? 'text-indigo-600' : 'text-gray-500'
+                      }`}>
+                        {step.title}
+                      </div>
+                    </div>
+                  </div>
+                  {stepIdx !== steps.length - 1 && (
+                    <div className="hidden sm:block absolute top-4 left-4 -ml-px h-0.5 w-full bg-gray-300" aria-hidden="true" />
+                  )}
+                </li>
+              )
+            })}
+          </ol>
+        </nav>
+      </div>
+
+      {/* Step Content */}
+      <div className="mb-8">
+        {renderStepContent()}
+      </div>
+
+      {/* Navigation */}
+      <div className="flex justify-between">
+        <button
+          type="button"
+          onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
+          disabled={currentStep === 0}
+          className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Previous
+        </button>
+        
+        <div className="flex space-x-3">
+          {currentStep < steps.length - 1 ? (
+            <button
+              type="button"
+              onClick={() => setCurrentStep(Math.min(steps.length - 1, currentStep + 1))}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              Next
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              <Save className="w-4 h-4 mr-2" />
+              Complete Setup
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}

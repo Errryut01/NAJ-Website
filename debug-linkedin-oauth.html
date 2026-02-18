@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn OAuth Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 20px; margin: 10px 5px; cursor: pointer; }
+        .oauth-url { word-break: break-all; background: #f8f9fa; padding: 10px; border-radius: 3px; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 LinkedIn OAuth Debug Tool</h1>
+        
+        <div class="test-section info">
+            <h3>📋 Current Configuration</h3>
+            <p><strong>Client ID:</strong> 86osahl2qwesp9</p>
+            <p><strong>Redirect URI:</strong> http://localhost:3000/api/auth/linkedin/callback</p>
+            <p><strong>Scope:</strong> r_liteprofile r_emailaddress</p>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Test OAuth URL Generation</h3>
+            <button onclick="testOAuthUrl()">Generate OAuth URL</button>
+            <div id="oauth-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Test OAuth Flow</h3>
+            <button onclick="testOAuthFlow()">Open LinkedIn OAuth</button>
+            <p><small>This will open LinkedIn in a new window. If you see the "Network Will Be Back Soon" error, it's a LinkedIn service issue.</small></p>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Alternative OAuth URLs to Try</h3>
+            <p>If the main OAuth URL doesn't work, try these alternatives:</p>
+            <button onclick="testBasicScope()">Basic Scope (r_liteprofile only)</button>
+            <button onclick="testEmailScope()">Email Scope (r_emailaddress only)</button>
+            <button onclick="testNoScope()">No Scope</button>
+            <div id="alternative-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🛠️ Troubleshooting Steps</h3>
+            <ol>
+                <li><strong>Check LinkedIn Developer Portal:</strong> Ensure redirect URI is exactly: <code>http://localhost:3000/api/auth/linkedin/callback</code></li>
+                <li><strong>Verify App Status:</strong> Make sure your LinkedIn app is active and approved</li>
+                <li><strong>Check Permissions:</strong> Ensure your app has the required permissions (r_liteprofile, r_emailaddress)</li>
+                <li><strong>Wait and Retry:</strong> LinkedIn sometimes has temporary issues - wait 5-10 minutes and try again</li>
+                <li><strong>Clear Browser Cache:</strong> Clear cookies and cache, then try again</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        const baseUrl = 'http://localhost:3000/api/auth/linkedin';
+        const clientId = '86osahl2qwesp9';
+        const redirectUri = 'http://localhost:3000/api/auth/linkedin/callback';
+
+        async function testOAuthUrl() {
+            try {
+                const response = await fetch(`${baseUrl}?userId=test-user`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                const data = await response.json();
+                
+                const resultDiv = document.getElementById('oauth-result');
+                if (data.authUrl) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ OAuth URL Generated Successfully</h4>
+                            <div class="oauth-url">${data.authUrl}</div>
+                            <button onclick="window.open('${data.authUrl}', '_blank')">Test This URL</button>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Error Generating OAuth URL</h4>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('oauth-result').innerHTML = `
+                    <div class="error">
+                        <h4>❌ Network Error</h4>
+                        <p>${error.message}</p>
+                        <p>Make sure the development server is running: <code>npm run dev</code></p>
+                    </div>
+                `;
+            }
+        }
+
+        function testOAuthFlow() {
+            const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=test-user&scope=r_liteprofile r_emailaddress`;
+            window.open(authUrl, '_blank');
+        }
+
+        function testBasicScope() {
+            const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=test-user&scope=r_liteprofile`;
+            document.getElementById('alternative-results').innerHTML = `
+                <div class="info">
+                    <h4>Basic Scope OAuth URL:</h4>
+                    <div class="oauth-url">${authUrl}</div>
+                    <button onclick="window.open('${authUrl}', '_blank')">Test Basic Scope</button>
+                </div>
+            `;
+        }
+
+        function testEmailScope() {
+            const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=test-user&scope=r_emailaddress`;
+            document.getElementById('alternative-results').innerHTML = `
+                <div class="info">
+                    <h4>Email Scope OAuth URL:</h4>
+                    <div class="oauth-url">${authUrl}</div>
+                    <button onclick="window.open('${authUrl}', '_blank')">Test Email Scope</button>
+                </div>
+            `;
+        }
+
+        function testNoScope() {
+            const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=test-user`;
+            document.getElementById('alternative-results').innerHTML = `
+                <div class="info">
+                    <h4>No Scope OAuth URL:</h4>
+                    <div class="oauth-url">${authUrl}</div>
+                    <button onclick="window.open('${authUrl}', '_blank')">Test No Scope</button>
+                </div>
+            `;
+        }
+
+        // Auto-test on page load
+        window.onload = function() {
+            testOAuthUrl();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn OAuth Flow Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; max-width: 800px; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .step { margin: 20px 0; padding: 15px; border-left: 4px solid #0077b5; background: #f8f9fa; }
+        .success { border-left-color: #28a745; background: #d4edda; }
+        .error { border-left-color: #dc3545; background: #f8d7da; }
+        .warning { border-left-color: #ffc107; background: #fff3cd; }
+        button { background: #0077b5; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #005885; }
+        .url-display { background: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace; word-break: break-all; margin: 10px 0; }
+        .status { font-weight: bold; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 LinkedIn OAuth Flow Test</h1>
+        
+        <div class="step">
+            <h3>Step 1: Generate OAuth URL</h3>
+            <button onclick="generateOAuthUrl()">Generate OAuth URL</button>
+            <div id="oauth-url-result"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Test OAuth Flow</h3>
+            <button onclick="testOAuthFlow()">Open LinkedIn OAuth</button>
+            <p><strong>Important:</strong> After clicking "Allow" on LinkedIn, check the URL in the address bar and tell me what you see.</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Check Callback URL</h3>
+            <p>After LinkedIn authorization, you should be redirected to:</p>
+            <div class="url-display">http://localhost:3000/api/auth/linkedin/callback?code=...&state=...</div>
+            <p>If you see a different URL, that's the problem!</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 4: Verify LinkedIn Developer Portal</h3>
+            <p>Make sure your LinkedIn app has this exact redirect URI:</p>
+            <div class="url-display">http://localhost:3000/api/auth/linkedin/callback</div>
+            <a href="https://www.linkedin.com/developers/" target="_blank">
+                <button>Open LinkedIn Developer Portal</button>
+            </a>
+        </div>
+
+        <div class="step">
+            <h3>Current Status</h3>
+            <div id="status" class="status">Ready to test...</div>
+        </div>
+    </div>
+
+    <script>
+        let oauthUrl = '';
+
+        async function generateOAuthUrl() {
+            try {
+                const response = await fetch('/api/auth/linkedin?userId=test-user');
+                const data = await response.json();
+                
+                if (data.authUrl) {
+                    oauthUrl = data.authUrl;
+                    document.getElementById('oauth-url-result').innerHTML = `
+                        <div class="success">
+                            <p>✅ OAuth URL generated successfully!</p>
+                            <div class="url-display">${data.authUrl}</div>
+                        </div>
+                    `;
+                    document.getElementById('status').innerHTML = '✅ OAuth URL ready - you can now test the flow';
+                } else {
+                    document.getElementById('oauth-url-result').innerHTML = `
+                        <div class="error">
+                            <p>❌ Failed to generate OAuth URL</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                    document.getElementById('status').innerHTML = '❌ Failed to generate OAuth URL';
+                }
+            } catch (error) {
+                document.getElementById('oauth-url-result').innerHTML = `
+                    <div class="error">
+                        <p>❌ Network error: ${error.message}</p>
+                        <p>Make sure the development server is running.</p>
+                    </div>
+                `;
+                document.getElementById('status').innerHTML = '❌ Network error - check server';
+            }
+        }
+
+        function testOAuthFlow() {
+            if (!oauthUrl) {
+                alert('Please generate OAuth URL first!');
+                return;
+            }
+            
+            document.getElementById('status').innerHTML = '🔄 Opening LinkedIn OAuth...';
+            window.open(oauthUrl, '_blank');
+            
+            // Set up a listener for when the user comes back
+            setTimeout(() => {
+                document.getElementById('status').innerHTML = '⏳ Waiting for LinkedIn redirect... Check the URL after authorization!';
+            }, 2000);
+        }
+
+        // Check if we're on a callback URL
+        if (window.location.href.includes('/api/auth/linkedin/callback')) {
+            document.getElementById('status').innerHTML = '🎉 You reached the callback URL! This means the redirect is working.';
+            document.getElementById('status').className = 'status success';
+        }
+    </script>
+</body>
+</html>

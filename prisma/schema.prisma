@@ -1,0 +1,273 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String                @id @default(cuid())
+  email               String                @unique
+  name                String
+  profilePictureUrl   String?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  grokCredentials     GrokCredentials?
+  applications        JobApplication[]
+  preferences         JobSearchPreferences?
+  profile             UserProfile?
+  calendarConnections CalendarConnection[]
+  emailConnections    EmailConnection[]
+  userMessages        Message[]
+  contacts            Contact[]
+  generatedMessages   GeneratedMessage[]
+  applicationQuestions JobApplicationQuestion?
+}
+
+model UserProfile {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  firstName           String
+  lastName            String
+  phone               String?
+  country             String?
+  postalCode          String?
+  city                String?
+  summary             String?
+  currentTitle        String?
+  currentCompany      String?
+  yearsExperience     Int?
+  skills              Json?
+  experience          Json?
+  education           Json?
+  resumeUrl           String?  // Resume file URL
+  coverLetterTemplate String?
+  age                 String?
+  race                String?
+  ethnicity           String?
+  veteranStatus       String?
+  politicalOrientation String?
+  socialMediaUse      Json?
+  workingHours        Json?
+  timezone            String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model JobSearchPreferences {
+  id                      String   @id @default(cuid())
+  userId                  String   @unique
+  jobTitles               Json?
+  companies               Json?
+  locations               Json?
+  salaryMin               Int?
+  jobTypes                Json?
+  remoteWork              Boolean  @default(false)
+  maxApplicationsPerMonth Int      @default(10)
+  autoApply               Boolean  @default(false)
+  autoConnect             Boolean  @default(false)
+  autoMessage             Boolean  @default(false)
+  connectionMessage       String?
+  followUpMessage         String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  user                    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model JobApplication {
+  id                      String            @id @default(cuid())
+  userId                  String
+  jobTitle                String
+  company                 String
+  jobUrl                  String?
+  jobDescription          String?
+  location                String?
+  salary                  String?
+  status                  ApplicationStatus @default(DRAFT)
+  appliedAt               DateTime?
+  resumeUrl               String?
+  coverLetterUrl          String?
+  companyApplicationMonth String
+  currentStage            String?           // Current stage description
+  nextActions             Json?             // Available next actions
+  lastContactDate         DateTime?         // Last contact with company
+  notes                   String?           // User notes
+  source                  String?           // Where the job was found
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+  user                    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contacts                Contact[]
+  generatedMessages       GeneratedMessage[]
+
+  @@unique([userId, company, companyApplicationMonth])
+}
+
+// Contact model for hiring managers and recruiters found for job applications
+model Contact {
+  id                String            @id @default(cuid())
+  userId            String
+  jobApplicationId  String?
+  name              String
+  title             String?
+  company           String?
+  email             String?
+  linkedInUrl       String?
+  phone             String?
+  role              String            // 'hiring_manager', 'recruiter', 'sales_manager', etc.
+  approved          Boolean           @default(false)
+  notes             String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobApplication    JobApplication?   @relation(fields: [jobApplicationId], references: [id], onDelete: Cascade)
+  generatedMessages GeneratedMessage[]
+  
+  @@index([userId, approved])
+  @@index([jobApplicationId])
+}
+
+// Generated messages for contacts and job applications
+model GeneratedMessage {
+  id                String            @id @default(cuid())
+  userId            String
+  jobApplicationId  String?
+  contactId         String?
+  subject           String?
+  body              String
+  messageType       MessageType       @default(INTEREST_EXPRESSION)
+  status            MessageStatus     @default(PENDING)
+  platform          String            @default("email") // 'email', 'linkedin', 'both'
+  sentAt            DateTime?
+  deliveredAt       DateTime?
+  readAt            DateTime?
+  repliedAt         DateTime?
+  replyMessage      String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobApplication    JobApplication?   @relation(fields: [jobApplicationId], references: [id], onDelete: Cascade)
+  contact           Contact?          @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  
+  @@index([userId, status])
+  @@index([contactId])
+  @@index([jobApplicationId])
+}
+
+// Job application questions - standard questions and answers
+model JobApplicationQuestion {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  questions           Json     // Store questions and answers as JSON
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model GrokCredentials {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  apiKey    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CalendarConnection {
+  id            String   @id @default(cuid())
+  userId        String
+  provider      String   // 'google' or 'apple'
+  accessToken   String
+  refreshToken  String?
+  expiresAt     DateTime?
+  calendarId    String?  // Specific calendar ID if multiple calendars
+  calendarName  String?  // Human-readable calendar name
+  isActive      Boolean  @default(true)
+  lastSyncAt    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider, calendarId])
+}
+
+model EmailConnection {
+  id            String   @id @default(cuid())
+  userId        String
+  provider      String   // 'gmail', 'yahoo', 'outlook'
+  email         String   // Email address for this connection
+  accessToken   String
+  refreshToken  String?
+  expiresAt     DateTime?
+  isActive      Boolean  @default(true)
+  lastSyncAt    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider, email])
+}
+
+enum ApplicationStatus {
+  DRAFT
+  APPLIED
+  INTERVIEW
+  REJECTED
+  OFFER
+  WITHDRAWN
+}
+
+enum MessageType {
+  CONNECTION_REQUEST
+  FOLLOW_UP
+  THANK_YOU
+  INTEREST_EXPRESSION
+  JOB_INQUIRY
+}
+
+enum MessageStatus {
+  PENDING
+  SENT
+  DELIVERED
+  READ
+  FAILED
+  REPLIED
+}
+
+model Message {
+  id              String        @id @default(cuid())
+  userId          String
+  recipientName   String
+  recipientTitle  String?
+  recipientCompany String?
+  recipientEmail  String?
+  linkedinProfileUrl String?
+  message         String
+  messageType     MessageType
+  status          MessageStatus @default(PENDING)
+  platform        String        // 'email', 'linkedin', 'both'
+  sentAt          DateTime?
+  deliveredAt     DateTime?
+  readAt          DateTime?
+  repliedAt       DateTime?
+  replyMessage    String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId, status])
+  @@index([userId, messageType])
+  @@index([sentAt])
+}
+
+model JobSearchCache {
+  id        String   @id @default(cuid())
+  searchKey String   @unique
+  results   String   // JSON string of search results
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([createdAt])
+}

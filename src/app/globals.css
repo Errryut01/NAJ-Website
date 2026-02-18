@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.naj-wallpaper {
+  background-color: #0c071a;
+  background-image:
+    linear-gradient(135deg, rgba(251, 191, 36, 0.14) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(251, 191, 36, 0.14) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(249, 115, 22, 0.12) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(249, 115, 22, 0.12) 25%, transparent 25%);
+  background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+  background-size: 24px 24px;
+}
+
+
+@keyframes naj-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.naj-marquee {
+  overflow: hidden;
+  position: relative;
+}
+
+.naj-marquee-track {
+  display: inline-flex;
+  gap: 1.5rem;
+  white-space: nowrap;
+  animation: naj-marquee 24s linear infinite;
+}

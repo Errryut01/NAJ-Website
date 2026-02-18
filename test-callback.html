@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Callback Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 LinkedIn Callback Test</h1>
+        
+        <div class="test-section info">
+            <h3>📋 Current URL Parameters</h3>
+            <p>This page will show you what parameters LinkedIn is sending back:</p>
+            <div id="url-params"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Test Different Redirect URIs</h3>
+            <p>Try these OAuth URLs with different redirect URIs to see which one works:</p>
+            
+            <h4>Option 1: Current URI (with /api/auth/linkedin/callback)</h4>
+            <button onclick="testCurrentUri()">Test Current URI</button>
+            <div id="current-result"></div>
+
+            <h4>Option 2: Simple URI (just /callback)</h4>
+            <button onclick="testSimpleUri()">Test Simple URI</button>
+            <div id="simple-result"></div>
+
+            <h4>Option 3: Root URI (just /)</h4>
+            <button onclick="testRootUri()">Test Root URI</button>
+            <div id="root-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 Instructions</h3>
+            <ol>
+                <li>Click one of the test buttons above</li>
+                <li>Complete the LinkedIn OAuth flow</li>
+                <li>Check the browser console (F12) for any error messages</li>
+                <li>Look at the URL parameters when you're redirected back</li>
+                <li>Update your LinkedIn Developer Portal with the working redirect URI</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        const clientId = '86osahl2qwesp9';
+        
+        // Show current URL parameters
+        function showUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const params = {};
+            for (const [key, value] of urlParams) {
+                params[key] = value;
+            }
+            
+            document.getElementById('url-params').innerHTML = `
+                <pre>${JSON.stringify(params, null, 2)}</pre>
+                <p><strong>Current URL:</strong> ${window.location.href}</p>
+            `;
+        }
+
+        function testCurrentUri() {
+            const redirectUri = 'http://localhost:3000/api/auth/linkedin/callback';
+            const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=test-current&scope=r_liteprofile r_emailaddress`;
+            
+            document.getElementById('current-result').innerHTML = `
+                <div class="info">
+                    <p><strong>Redirect URI:</strong> ${redirectUri}</p>
+                    <p><strong>OAuth URL:</strong></p>
+                    <pre>${authUrl}</pre>
+                    <button onclick="window.open('${authUrl}', '_blank')">Open LinkedIn OAuth</button>
+                </div>
+            `;
+        }
+
+        function testSimpleUri() {
+            const redirectUri = 'http://localhost:3000/callback';
+            const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=test-simple&scope=r_liteprofile r_emailaddress`;
+            
+            document.getElementById('simple-result').innerHTML = `
+                <div class="info">
+                    <p><strong>Redirect URI:</strong> ${redirectUri}</p>
+                    <p><strong>OAuth URL:</strong></p>
+                    <pre>${authUrl}</pre>
+                    <button onclick="window.open('${authUrl}', '_blank')">Open LinkedIn OAuth</button>
+                </div>
+            `;
+        }
+
+        function testRootUri() {
+            const redirectUri = 'http://localhost:3000/';
+            const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=test-root&scope=r_liteprofile r_emailaddress`;
+            
+            document.getElementById('root-result').innerHTML = `
+                <div class="info">
+                    <p><strong>Redirect URI:</strong> ${redirectUri}</p>
+                    <p><strong>OAuth URL:</strong></p>
+                    <pre>${authUrl}</pre>
+                    <button onclick="window.open('${authUrl}', '_blank')">Open LinkedIn OAuth</button>
+                </div>
+            `;
+        }
+
+        // Show URL parameters on page load
+        window.onload = function() {
+            showUrlParams();
+        };
+    </script>
+</body>
+</html>
