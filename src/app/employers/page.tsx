@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import MobileNav from '@/components/MobileNav'
 
-const NAV_ITEMS = [
+const EMPLOYERS_NAV_ITEMS = [
   { id: 'home', label: 'Home', href: '/' },
   { id: 'employers', label: 'For Employers', href: '/employers' },
   { id: 'candidates', label: 'For Candidates', href: '/#candidates' },
@@ -12,26 +13,16 @@ const NAV_ITEMS = [
 export default function EmployersPage() {
   return (
     <div className="naj-wallpaper min-h-screen bg-[#0c071a] text-slate-100">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0c071a]/90 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-center px-4 py-4 sm:px-6">
-          <nav className="flex flex-wrap items-center justify-center gap-4 text-sm font-semibold text-slate-200 sm:gap-6">
-            {NAV_ITEMS.map((item) => (
-              <Link key={item.id} href={item.href} className="hover:text-white">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
+      <MobileNav navItems={EMPLOYERS_NAV_ITEMS} />
 
       <main>
-        <div className="mx-auto w-full max-w-6xl px-6 pt-12">
+        <div className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-6 sm:pt-12">
           <p className="text-center text-lg font-semibold uppercase tracking-[0.3em] text-amber-300 sm:text-xl">
             NAJ is a Veteran and Minority Owned Business
           </p>
         </div>
         <section className="bg-gradient-to-br from-[#0c071a] via-[#140a26] to-[#0c071a]">
-          <div className="mx-auto w-full max-w-6xl px-6 py-20">
+          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-20">
             <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div className="space-y-6">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-300">Employer Services</p>
@@ -71,7 +62,7 @@ export default function EmployersPage() {
         </section>
 
         <section className="border-t border-white/10 bg-[#0f081d]/90">
-          <div className="mx-auto w-full max-w-6xl px-6 py-16">
+          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
             <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-xl space-y-4">
                 <h2 className="text-3xl font-semibold tracking-tight">How We Support Employers</h2>

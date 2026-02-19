@@ -1,35 +1,16 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { CandidateIntakeForm } from '@/components/CandidateIntakeForm'
 import { ContactForm } from '@/components/ContactForm'
-
-const NAV_ITEMS = [
-  { id: 'home', label: 'Home', href: '#home' },
-  { id: 'employers', label: 'For Employers', href: '/employers' },
-  { id: 'candidates', label: 'For Candidates', href: '#candidates' },
-  { id: 'veterans', label: 'For Transitioning Veterans', href: '#veterans' },
-  { id: 'team', label: 'About/Team', href: '#team' },
-  { id: 'contact', label: 'Contact/Action', href: '#contact' },
-]
+import MobileNav from '@/components/MobileNav'
 
 export default function Home() {
   return (
     <div className="naj-wallpaper min-h-screen bg-[#0c071a] text-slate-100">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0c071a]/90 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-center px-4 py-4 sm:px-6">
-          <nav className="flex flex-wrap items-center justify-center gap-4 text-sm font-semibold text-slate-200 sm:gap-6">
-            {NAV_ITEMS.map((item) => (
-              <Link key={item.id} href={item.href} className="hover:text-white">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
+      <MobileNav />
 
       <main>
         <section id="home" className="bg-gradient-to-br from-[#0c071a] via-[#140a26] to-[#0c071a]">
-          <div className="mx-auto w-full max-w-6xl px-6 py-20">
+          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-20">
             <div className="grid gap-12 lg:grid-cols-1">
               <div className="space-y-6">
                 <div className="flex items-start justify-between">
@@ -37,8 +18,8 @@ export default function Home() {
                     <Image src="/naj-logo-2026-v2.png" alt="NAJ logo" fill className="object-contain" />
                   </div>
                 </div>
-                <div className="text-center text-amber-300 mb-48 mt-12">
-                  <p className="whitespace-nowrap text-5xl font-semibold tracking-wide sm:text-6xl lg:text-7xl">
+                <div className="text-center text-amber-300 mb-32 mt-8 sm:mb-48 sm:mt-12">
+                  <p className="text-3xl font-semibold tracking-wide sm:text-5xl md:text-6xl lg:text-7xl">
                     Network Ferociously
                   </p>
                 </div>
@@ -97,7 +78,7 @@ export default function Home() {
         </section>
 
         <section id="candidates" className="border-t border-white/10 bg-[#0f081d]/90">
-          <div className="mx-auto w-full max-w-7xl px-6 py-16">
+          <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
             <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
               <div className="space-y-4 lg:pr-6">
                 <h2 className="text-3xl font-semibold tracking-tight">For Candidates</h2>
@@ -200,7 +181,7 @@ export default function Home() {
         </section>
 
         <section id="veterans" className="border-t border-white/10 bg-[#0f081d]/90">
-          <div className="mx-auto w-full max-w-6xl px-6 py-20">
+          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-20">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div className="space-y-5">
                 <p className="text-base font-semibold uppercase tracking-[0.25em] text-amber-300">
@@ -234,7 +215,7 @@ export default function Home() {
         </section>
 
         <section id="team" className="border-t border-white/10 bg-[#0f081d]/90">
-          <div className="mx-auto w-full max-w-6xl px-6 py-16">
+          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
             <div className="space-y-4 text-center">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-300">About the Team</p>
               <h2 className="text-3xl font-semibold tracking-tight">People first recruiting and coaching with domain expertise.</h2>
@@ -258,7 +239,7 @@ export default function Home() {
         </section>
 
         <section id="contact" className="border-t border-white/10 bg-[#0f081d]/90">
-          <div className="mx-auto w-full max-w-6xl px-6 py-16">
+          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
             <div className="mx-auto max-w-2xl">
               <div className="space-y-4 text-center">
                 <h2 className="text-3xl font-semibold tracking-tight">Contact / Action</h2>
@@ -273,7 +254,7 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-white/10 bg-[#0f081d]/90">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-6 py-6 text-sm text-slate-400 md:flex-row">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-4 py-6 text-sm text-slate-400 sm:px-6 md:flex-row">
           <span>© 2026 NAJ. All rights reserved.</span>
           <div className="flex gap-4">
             <a href="#home" className="hover:text-white">Home</a>
