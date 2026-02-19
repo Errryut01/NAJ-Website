@@ -3,27 +3,78 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id                  String                @id @default(cuid())
-  email               String                @unique
-  name                String
-  profilePictureUrl   String?
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  grokCredentials     GrokCredentials?
-  applications        JobApplication[]
-  preferences         JobSearchPreferences?
-  profile             UserProfile?
-  calendarConnections CalendarConnection[]
-  emailConnections    EmailConnection[]
-  userMessages        Message[]
-  contacts            Contact[]
-  generatedMessages   GeneratedMessage[]
-  applicationQuestions JobApplicationQuestion?
+  id                    String                @id @default(cuid())
+  email                 String                @unique
+  name                  String
+  profilePictureUrl     String?
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  grokCredentials       GrokCredentials?
+  applications          JobApplication[]
+  preferences           JobSearchPreferences?
+  profile               UserProfile?
+  calendarConnections   CalendarConnection[]
+  emailConnections      EmailConnection[]
+  userMessages          Message[]
+  contacts              Contact[]
+  generatedMessages     GeneratedMessage[]
+  applicationQuestions  JobApplicationQuestion?
+  linkedInCredentials   LinkedInCredentials?
+  linkedInConnections   LinkedInConnection[]
+  linkedInMessages     LinkedInMessage[]
+}
+
+model LinkedInCredentials {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  accessToken  String
+  refreshToken String?
+  expiresAt    DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LinkedInConnection {
+  id            String           @id @default(cuid())
+  userId        String
+  linkedinId    String
+  name          String
+  title         String?
+  company       String?
+  profileUrl    String
+  connectionUrl String?
+  status        String           @default("PENDING")
+  connectedAt   DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages      LinkedInMessage[]
+
+  @@index([userId])
+}
+
+model LinkedInMessage {
+  id                String              @id @default(cuid())
+  userId            String
+  connectionId      String
+  content           String
+  messageType       String
+  sentAt            DateTime?
+  status            String              @default("PENDING")
+  jobApplicationId  String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  connection        LinkedInConnection  @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([connectionId])
+  @@index([userId])
 }
 
 model UserProfile {
