@@ -11,10 +11,10 @@ export default function Home() {
       <main>
         <section id="home" className="bg-gradient-to-br from-[#0c071a] via-[#140a26] to-[#0c071a]">
           <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-20">
-            <div className="grid gap-12 lg:grid-cols-1">
-              <div className="space-y-6">
-                <div className="flex items-start justify-between">
-                  <div className="relative h-[12rem] w-[12rem] sm:h-[16rem] sm:w-[16rem]">
+            <div className="grid w-full min-w-0 gap-12 lg:grid-cols-1">
+              <div className="min-w-0 space-y-6">
+                <div className="flex justify-center sm:justify-start">
+                  <div className="relative h-[12rem] w-[12rem] shrink-0 sm:h-[16rem] sm:w-[16rem]">
                     <Image src="/naj-logo-2026-v2.png" alt="NAJ logo" fill className="object-contain" />
                   </div>
                 </div>
@@ -23,27 +23,27 @@ export default function Home() {
                   <span className="text-[3.75rem] font-semibold tracking-wide sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Ferociously</span>
                 </div>
                 <div className="space-y-10">
-                  <p className="text-center text-base font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-lg sm:tracking-[0.25em] lg:tracking-[0.3em]">
+                  <p className="max-w-full break-words text-center text-base font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-lg sm:tracking-[0.25em] lg:tracking-[0.3em]">
                     NAJ is a Veteran and Minority Owned Business
                   </p>
                   <div className="h-8"></div>
-                  <p className="mt-10 text-center text-sm font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-base sm:tracking-[0.25em] lg:tracking-[0.3em]">
+                  <p className="mt-10 max-w-full break-words text-center text-sm font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-base sm:tracking-[0.25em] lg:tracking-[0.3em]">
                     Our mentees have launched careers at top tech companies
                   </p>
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl border border-white/10 bg-white/90 p-6">
+                  <div className="grid w-full min-w-0 grid-cols-1 gap-4 rounded-2xl border border-white/10 bg-white/90 p-4 sm:grid-cols-2 sm:p-6 lg:grid-cols-4">
                     {[
-                      { label: 'Amazon Web Services', type: 'logo', src: '/logo-aws.png', className: 'h-40 w-auto max-w-[26rem]' },
-                      { label: 'Couchbase', type: 'logo', src: '/logo-couchbase.png', className: 'h-36 w-auto max-w-[24rem]' },
-                      { label: 'Dell', type: 'logo', src: '/logo-dell.png', className: 'h-32 w-auto max-w-[20rem]' },
-                      { label: 'Cisco', type: 'logo', src: '/logo-cisco-v3.png', className: 'h-36 w-auto max-w-[28rem]' },
-                      { label: 'Fortinet', type: 'logo', src: '/logo-fortinet.png', className: 'h-36 w-auto max-w-[28rem]' },
-                      { label: 'NetApp', type: 'logo', src: '/logo-netapp.png', className: 'h-32 w-auto max-w-[20rem]' },
-                      { label: 'Oracle', type: 'logo', src: '/logo-oracle.png', className: 'h-28 w-auto max-w-[22rem]' },
-                      { label: 'mongoDB', type: 'logo', src: '/logo-mongodb.png', className: 'h-36 w-auto max-w-[24rem]' },
+                      { label: 'Amazon Web Services', type: 'logo', src: '/logo-aws.png', className: 'h-28 w-auto max-w-[10rem] sm:h-40 sm:max-w-[26rem]' },
+                      { label: 'Couchbase', type: 'logo', src: '/logo-couchbase.png', className: 'h-24 w-auto max-w-[8rem] sm:h-36 sm:max-w-[24rem]' },
+                      { label: 'Dell', type: 'logo', src: '/logo-dell.png', className: 'h-20 w-auto max-w-[7rem] sm:h-32 sm:max-w-[20rem]' },
+                      { label: 'Cisco', type: 'logo', src: '/logo-cisco-v3.png', className: 'h-24 w-auto max-w-[9rem] sm:h-36 sm:max-w-[28rem]' },
+                      { label: 'Fortinet', type: 'logo', src: '/logo-fortinet.png', className: 'h-24 w-auto max-w-[9rem] sm:h-36 sm:max-w-[28rem]' },
+                      { label: 'NetApp', type: 'logo', src: '/logo-netapp.png', className: 'h-20 w-auto max-w-[7rem] sm:h-32 sm:max-w-[20rem]' },
+                      { label: 'Oracle', type: 'logo', src: '/logo-oracle.png', className: 'h-20 w-auto max-w-[14rem] object-contain sm:h-28 sm:max-w-[22rem]' },
+                      { label: 'mongoDB', type: 'logo', src: '/logo-mongodb.png', className: 'h-24 w-auto max-w-[8rem] sm:h-36 sm:max-w-[24rem]' },
                     ].map((item) => (
                       <div
                         key={item.label}
-                        className="flex items-center justify-center rounded-xl border border-transparent bg-transparent px-4 py-10 text-center text-sm font-semibold text-slate-900"
+                        className="flex w-full min-w-0 items-center justify-center rounded-xl border border-transparent bg-transparent px-4 py-8 text-center text-sm font-semibold text-slate-900 sm:py-10"
                       >
                         {item.type === 'logo' ? (
                           <img src={item.src} alt={`${item.label} logo`} className={item.className} />
