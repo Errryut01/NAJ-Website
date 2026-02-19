@@ -195,13 +195,15 @@ export default function Home() {
                 </p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-[#140a26]/70 p-7 text-base text-slate-300 shadow-sm">
-                <video
-                  className="mb-6 h-56 w-full rounded-xl object-cover"
-                  src="/veteran-transition.mp4"
-                  poster="/veteran-transition-poster-v2.png"
-                  controls
-                  playsInline
-                />
+                <div className="relative mb-6 aspect-video w-full overflow-hidden rounded-xl">
+                  <iframe
+                    className="absolute inset-0 h-full w-full"
+                    src="https://www.youtube-nocookie.com/embed/PBs7rsN58LI?rel=0"
+                    title="For Transitioning Veterans"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
                 <ul className="space-y-4">
                   <li>Identify Marketable Skills</li>
                   <li>Translate Your Military Experience</li>
