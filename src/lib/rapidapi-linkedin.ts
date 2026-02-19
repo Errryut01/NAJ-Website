@@ -193,7 +193,7 @@ export class RapidApiLinkedInService {
    * Get detailed profile information for a specific LinkedIn profile
    */
   async getProfileDetails(profileId: string): Promise<LinkedInProfile | null> {
-    if (!this.apiKey) {
+    if (this.apiKeys.length === 0) {
       console.warn('RapidAPI LinkedIn key not configured')
       return null
     }
@@ -201,7 +201,7 @@ export class RapidApiLinkedInService {
     try {
       const response = await axios.get(`${this.baseUrl}/api/v1/profile/${profileId}`, {
         headers: {
-          'X-RapidAPI-Key': this.apiKey,
+          'X-RapidAPI-Key': this.getCurrentApiKey(),
           'X-RapidAPI-Host': 'fresh-linkedin-scraper-api.p.rapidapi.com'
         }
       })
@@ -381,7 +381,7 @@ export class RapidApiLinkedInService {
    * Get user's 1st degree connections
    */
   async getFirstDegreeConnections(): Promise<LinkedInProfile[]> {
-    if (!this.apiKey) {
+    if (this.apiKeys.length === 0) {
       console.warn('RapidAPI LinkedIn key not configured')
       return []
     }
@@ -389,7 +389,7 @@ export class RapidApiLinkedInService {
     try {
       const response = await axios.get(`${this.baseUrl}/api/v1/connections`, {
         headers: {
-          'X-RapidAPI-Key': this.apiKey,
+          'X-RapidAPI-Key': this.getCurrentApiKey(),
           'X-RapidAPI-Host': 'fresh-linkedin-scraper-api.p.rapidapi.com'
         }
       })

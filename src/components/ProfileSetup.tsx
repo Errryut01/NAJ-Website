@@ -256,7 +256,7 @@ export default function ProfileSetup({ onComplete }: ProfileSetupProps) {
     console.log('Profile object keys:', profile ? Object.keys(profile) : 'null')
     console.log('Profile currentTitle:', profile?.currentTitle)
     console.log('Profile summary:', profile?.summary)
-    console.log('Profile location:', profile?.location)
+    console.log('Profile city:', profile?.city)
     console.log('handleAutofill called, user:', user)
     if (!profile) return
 

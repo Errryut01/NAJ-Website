@@ -9,14 +9,23 @@ export interface ResumeData {
   experience?: Array<{
     title: string
     company: string
-    duration: string
+    duration?: string
     description?: string
+    location?: string
+    startDate?: string
+    endDate?: string
+    current?: boolean
   }>
   education?: Array<{
-    school: string
+    school?: string
+    institution?: string
     degree: string
     field: string
-    duration: string
+    duration?: string
+    startDate?: string
+    endDate?: string
+    gpa?: number
+    description?: string
   }>
   skills?: string[]
   rawText?: string

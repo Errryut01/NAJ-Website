@@ -267,16 +267,16 @@ function ConnectionsPageContent() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Link
-                href="/?section=job-search"
+                href="/"
                 className="inline-flex items-center text-base font-bold text-gray-700 hover:text-gray-900 mr-4"
               >
                 <ArrowLeft className="w-4 h-4 mr-1" />
-                Back to Job Search
+                Back to Home
               </Link>
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">Connections</h1>
                 <p className="mt-1 text-base font-medium text-gray-700">
-                  LinkedIn connections at companies from your job search
+                  LinkedIn connections at your target companies
                 </p>
               </div>
             </div>

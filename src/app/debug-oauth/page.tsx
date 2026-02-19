@@ -18,7 +18,7 @@ export default function DebugOAuth() {
       const response = await fetch(`/api/auth/linkedin?userId=${testUserId}`)
       const data = await response.json()
       
-      setResults(prev => ({ ...prev, step1: data }))
+      setResults((prev: any) => ({ ...prev, step1: data }))
       console.log('Step 1 result:', data)
       
       if (data.authUrl) {
@@ -27,7 +27,7 @@ export default function DebugOAuth() {
         console.log('OAuth URL:', data.authUrl)
         
         // Step 2: Test the OAuth URL (we'll just show it, not redirect)
-        setResults(prev => ({ 
+        setResults((prev: any) => ({ 
           ...prev, 
           step2: { 
             message: 'OAuth URL generated successfully',
@@ -41,7 +41,7 @@ export default function DebugOAuth() {
       
     } catch (error) {
       console.error('OAuth flow test error:', error)
-      setResults(prev => ({ 
+      setResults((prev: any) => ({ 
         ...prev, 
         error: error instanceof Error ? error.message : 'Unknown error' 
       }))
@@ -62,7 +62,7 @@ export default function DebugOAuth() {
       const location = response.headers.get('location')
       console.log('Redirect location:', location)
       
-      setResults(prev => ({ 
+      setResults((prev: any) => ({ 
         ...prev, 
         callbackTest: { 
           status: response.status,
@@ -73,7 +73,7 @@ export default function DebugOAuth() {
       
     } catch (error) {
       console.error('Callback test error:', error)
-      setResults(prev => ({ 
+      setResults((prev: any) => ({ 
         ...prev, 
         callbackError: error instanceof Error ? error.message : 'Unknown error' 
       }))

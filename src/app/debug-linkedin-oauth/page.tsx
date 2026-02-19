@@ -4,7 +4,8 @@ import { useState } from 'react'
 
 export default function DebugLinkedInOAuth() {
   const [step, setStep] = useState(0)
-  const [results, setResults] = useState<any>({})
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+const [results, setResults] = useState<any>({})
   const [loading, setLoading] = useState(false)
 
   const runFullTest = async () => {
@@ -16,7 +17,7 @@ export default function DebugLinkedInOAuth() {
       console.log('Step 1: Testing LinkedIn configuration...')
       const configResponse = await fetch('/api/test-linkedin-config')
       const configData = await configResponse.json()
-      setResults(prev => ({ ...prev, config: configData }))
+      setResults((prev: any) => ({ ...prev, config: configData }))
       
       if (!configData.success) {
         throw new Error('LinkedIn configuration test failed')
@@ -29,7 +30,7 @@ export default function DebugLinkedInOAuth() {
       const testUserId = `debug-${Date.now()}`
       const oauthResponse = await fetch(`/api/auth/linkedin?userId=${testUserId}`)
       const oauthData = await oauthResponse.json()
-      setResults(prev => ({ ...prev, oauth: oauthData }))
+      setResults((prev: any) => ({ ...prev, oauth: oauthData }))
       
       if (!oauthData.authUrl) {
         throw new Error('Failed to generate OAuth URL')
@@ -41,7 +42,7 @@ export default function DebugLinkedInOAuth() {
       console.log('Step 3: Parsing OAuth URL...')
       const url = new URL(oauthData.authUrl)
       const params = Object.fromEntries(url.searchParams.entries())
-      setResults(prev => ({ 
+      setResults((prev: any) => ({ 
         ...prev, 
         parsedUrl: {
           baseUrl: url.origin + url.pathname,
@@ -56,7 +57,7 @@ export default function DebugLinkedInOAuth() {
       console.log('Step 4: Testing callback error handling...')
       const callbackResponse = await fetch('/api/auth/linkedin/callback?code=invalid-test-code&state=test-user')
       const location = callbackResponse.headers.get('location')
-      setResults(prev => ({ 
+      setResults((prev: any) => ({ 
         ...prev, 
         callbackTest: {
           status: callbackResponse.status,
@@ -68,7 +69,7 @@ export default function DebugLinkedInOAuth() {
       setStep(5)
       
       // Step 5: Provide instructions
-      setResults(prev => ({ 
+      setResults((prev: any) => ({ 
         ...prev, 
         instructions: {
           message: 'Test completed. Check the results below and follow the instructions to test the actual OAuth flow.',
@@ -84,7 +85,7 @@ export default function DebugLinkedInOAuth() {
       
     } catch (error) {
       console.error('Test error:', error)
-      setResults(prev => ({ 
+      setResults((prev: any) => ({ 
         ...prev, 
         error: error instanceof Error ? error.message : 'Unknown error' 
       }))

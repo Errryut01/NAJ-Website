@@ -9,11 +9,12 @@ interface LinkedInProfileProps {
 
 interface ProfileData {
   connected: boolean
-  profile: {
+  profile?: {
     firstName: string
     lastName: string
     phone?: string
     location?: string
+    country?: string
     summary?: string
     currentTitle?: string
     currentCompany?: string
@@ -24,7 +25,7 @@ interface ProfileData {
     linkedInProfileUrl?: string
     profilePictureUrl?: string
   }
-  linkedinCredentials: {
+  linkedinCredentials?: {
     hasAccessToken: boolean
     expiresAt?: string
   }
@@ -59,8 +60,8 @@ export default function LinkedInProfile({ userId }: LinkedInProfileProps) {
       // Set a default state on error
       setProfileData({
         connected: false,
-        profile: null,
-        linkedinCredentials: null,
+        profile: undefined,
+        linkedinCredentials: undefined,
         isProfileComplete: false,
         user: {
           id: userId,
@@ -144,9 +145,9 @@ export default function LinkedInProfile({ userId }: LinkedInProfileProps) {
       <div className="p-6">
         {/* Profile Header */}
         <div className="flex items-start space-x-4">
-          {profileData.profile.profilePictureUrl ? (
+          {profileData.profile?.profilePictureUrl ? (
             <img
-              src={profileData.profile.profilePictureUrl}
+              src={profileData.profile?.profilePictureUrl}
               alt="Profile"
               className="w-16 h-16 rounded-full object-cover"
             />
@@ -158,13 +159,13 @@ export default function LinkedInProfile({ userId }: LinkedInProfileProps) {
           
           <div className="flex-1">
             <h4 className="text-xl font-semibold text-gray-900">
-              {profileData.profile.firstName} {profileData.profile.lastName}
+              {profileData.profile?.firstName} {profileData.profile?.lastName}
             </h4>
             
-            {profileData.profile.currentTitle && (
+            {profileData.profile?.currentTitle && (
               <p className="text-gray-600 mt-1">
-                {profileData.profile.currentTitle}
-                {profileData.profile.currentCompany && ` at ${profileData.profile.currentCompany}`}
+                {profileData.profile?.currentTitle}
+                {profileData.profile?.currentCompany && ` at ${profileData.profile?.currentCompany}`}
               </p>
             )}
 
@@ -173,18 +174,18 @@ export default function LinkedInProfile({ userId }: LinkedInProfileProps) {
                 <Mail className="h-4 w-4 mr-1" />
                 {profileData.user.email}
               </div>
-              {profileData.profile.country && (
+              {profileData.profile?.country && (
                 <div className="flex items-center">
                   <MapPin className="h-4 w-4 mr-1" />
-                  {profileData.profile.country}
+                  {profileData.profile?.country}
                 </div>
               )}
             </div>
           </div>
 
-          {profileData.profile.linkedInProfileUrl && (
+          {profileData.profile?.linkedInProfileUrl && (
             <a
-              href={profileData.profile.linkedInProfileUrl}
+              href={profileData.profile?.linkedInProfileUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-900 bg-white hover:bg-gray-50"
@@ -196,35 +197,35 @@ export default function LinkedInProfile({ userId }: LinkedInProfileProps) {
         </div>
 
         {/* Profile Summary */}
-        {profileData.profile.summary && (
+        {profileData.profile?.summary && (
           <div className="mt-6">
             <h5 className="text-sm font-medium text-gray-900 mb-2">Summary</h5>
             <p className="text-gray-600 text-sm leading-relaxed">
-              {profileData.profile.summary}
+              {profileData.profile?.summary}
             </p>
           </div>
         )}
 
         {/* Professional Information */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {profileData.profile.yearsExperience && (
+          {profileData.profile?.yearsExperience && (
             <div>
               <h5 className="text-sm font-medium text-gray-900 mb-2">Experience</h5>
               <div className="flex items-center text-sm text-gray-600">
                 <Briefcase className="h-4 w-4 mr-2" />
-                {profileData.profile.yearsExperience} years
+                {profileData.profile?.yearsExperience} years
               </div>
             </div>
           )}
 
-          {profileData.linkedinCredentials.expiresAt && (
+          {profileData.linkedinCredentials?.expiresAt && (
             <div>
               <h5 className="text-sm font-medium text-gray-900 mb-2">Connection Status</h5>
               <div className="flex items-center text-sm">
-                {isTokenExpired(profileData.linkedinCredentials.expiresAt) ? (
+                {isTokenExpired(profileData.linkedinCredentials?.expiresAt) ? (
                   <span className="text-red-600">Token Expired - Reconnection Required</span>
                 ) : (
-                  <span className="text-green-600">Active until {formatDate(profileData.linkedinCredentials.expiresAt)}</span>
+                  <span className="text-green-600">Active until {formatDate(profileData.linkedinCredentials?.expiresAt)}</span>
                 )}
               </div>
             </div>
@@ -232,12 +233,12 @@ export default function LinkedInProfile({ userId }: LinkedInProfileProps) {
         </div>
 
         {/* Skills */}
-        {profileData.profile.skills && (
+        {profileData.profile?.skills && (
           <div className="mt-6">
             <h5 className="text-sm font-medium text-gray-900 mb-2">Skills</h5>
             <div className="flex flex-wrap gap-2">
-              {Array.isArray(profileData.profile.skills) ? (
-                profileData.profile.skills.map((skill: string, index: number) => (
+              {Array.isArray(profileData.profile?.skills) ? (
+                profileData.profile?.skills.map((skill: string, index: number) => (
                   <span
                     key={index}
                     className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"

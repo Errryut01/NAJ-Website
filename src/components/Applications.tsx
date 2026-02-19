@@ -404,7 +404,7 @@ export default function Applications() {
                       <div className="flex items-center space-x-4 text-xs text-gray-500 mb-3">
                         <div className="flex items-center">
                           <Calendar className="w-3 h-3 mr-1" />
-                          Applied on {new Date(application.appliedAt).toLocaleDateString()}
+                          Applied on {application.appliedAt ? new Date(application.appliedAt).toLocaleDateString() : 'N/A'}
                         </div>
                         {application.jobUrl && (
                           <a

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { GrokResponse, UserProfile, JobPosting } from '@/lib/types'
 
 const GROK_API_URL = process.env.GROK_API_URL || 'https://api.grok.com/v1'
 const GROK_API_KEY = process.env.GROK_API_KEY
@@ -12,8 +11,8 @@ export class GrokService {
   }
 
   async generateResume(
-    profile: UserProfile,
-    jobPosting: JobPosting,
+    profile: any,
+    jobPosting: any,
     preferences?: any
   ): Promise<string> {
     try {
@@ -52,8 +51,8 @@ export class GrokService {
   }
 
   async generateCoverLetter(
-    profile: UserProfile,
-    jobPosting: JobPosting,
+    profile: any,
+    jobPosting: any,
     preferences?: any
   ): Promise<string> {
     try {
@@ -92,9 +91,9 @@ export class GrokService {
   }
 
   async generateLinkedInMessage(
-    profile: UserProfile,
+    profile: any,
     connection: any,
-    jobPosting: JobPosting,
+    jobPosting: any,
     messageType: string
   ): Promise<string> {
     try {
@@ -133,7 +132,7 @@ export class GrokService {
   }
 
   async generatePersonalizedEmail(
-    profile: UserProfile,
+    profile: any,
     connection: any,
     jobApplication: any
   ): Promise<{ subject: string; body: string }> {
@@ -203,7 +202,7 @@ export class GrokService {
     }
   }
 
-  private buildResumePrompt(profile: UserProfile, jobPosting: JobPosting, preferences?: any): string {
+  private buildResumePrompt(profile: any, jobPosting: any, preferences?: any): string {
     return `
 Create a tailored resume for the following job posting:
 
@@ -239,7 +238,7 @@ Generate a complete resume that would make this candidate stand out for this spe
     `.trim()
   }
 
-  private buildCoverLetterPrompt(profile: UserProfile, jobPosting: JobPosting, preferences?: any): string {
+  private buildCoverLetterPrompt(profile: any, jobPosting: any, preferences?: any): string {
     return `
 Create a personalized cover letter for the following job posting:
 
@@ -268,7 +267,7 @@ Generate a compelling cover letter that demonstrates why this candidate is perfe
     `.trim()
   }
 
-  private buildLinkedInMessagePrompt(profile: UserProfile, connection: any, jobPosting: JobPosting, messageType: string): string {
+  private buildLinkedInMessagePrompt(profile: any, connection: any, jobPosting: any, messageType: string): string {
     const basePrompt = `
 Create a professional LinkedIn message for the following scenario:
 
@@ -341,7 +340,7 @@ Generate a professional message.`
     }
   }
 
-  private buildPersonalizedEmailPrompt(profile: UserProfile, connection: any, jobApplication: any): string {
+  private buildPersonalizedEmailPrompt(profile: any, connection: any, jobApplication: any): string {
     return `
 Create a personalized professional email for job networking:
 

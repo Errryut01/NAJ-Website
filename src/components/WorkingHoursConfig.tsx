@@ -22,7 +22,7 @@ const DAYS_OF_WEEK = [
 ]
 
 export default function WorkingHoursConfig() {
-  const { user, profile, updateProfile } = useUser()
+  const { user, profile, refreshProfile } = useUser()
   const [workingHours, setWorkingHours] = useState<WorkingHours[]>([])
   const [timezone, setTimezone] = useState('America/New_York')
   const [isOpen, setIsOpen] = useState(false)
@@ -88,7 +88,7 @@ export default function WorkingHoursConfig() {
       })
 
       if (response.ok) {
-        await updateProfile()
+        await refreshProfile()
         setIsOpen(false)
       } else {
         console.error('Failed to save working hours')

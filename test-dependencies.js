@@ -88,7 +88,7 @@ console.log('\n5. 🔌 Checking API endpoints...');
 const apiEndpoints = [
   'src/app/api/auth/linkedin/route.ts',
   'src/app/api/email/auth/route.ts',
-  'src/app/api/jobs/analyze/route.ts'
+  'src/app/api/email/auth/route.ts'
 ];
 
 const existingEndpoints = apiEndpoints.filter(endpoint => fs.existsSync(endpoint));
@@ -98,7 +98,6 @@ console.log(`   ✅ ${existingEndpoints.length}/${apiEndpoints.length} API endpo
 console.log('\n6. 🧩 Checking React components...');
 const components = [
   'src/components/ProfileSetup.tsx',
-  'src/components/JobSearchNew.tsx',
   'src/components/Messaging.tsx',
   'src/components/Connections.tsx',
   'src/components/Applications.tsx'

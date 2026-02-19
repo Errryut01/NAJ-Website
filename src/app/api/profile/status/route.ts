@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
       where: { id: userId },
       include: {
         profile: true,
-        linkedinCredentials: true,
+        linkedInCredentials: true,
       },
     })
 
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    const isLinkedInConnected = !!user.linkedinCredentials?.accessToken
+    const isLinkedInConnected = !!user.linkedInCredentials?.accessToken
     const isProfileComplete = !!user.profile?.firstName && !!user.profile?.lastName
 
     return NextResponse.json({
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
       profile: user.profile,
       linkedinCredentials: isLinkedInConnected ? {
         hasAccessToken: true,
-        expiresAt: user.linkedinCredentials?.expiresAt
+        expiresAt: user.linkedInCredentials?.expiresAt
       } : null,
       isProfileComplete,
       user: {

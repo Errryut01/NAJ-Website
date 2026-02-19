@@ -25,41 +25,14 @@ export async function POST(request: NextRequest) {
       take: 10 // Limit to top 10 companies
     })
 
-    // Also get companies from job search cache if available
-    const jobSearchResults = await prisma.jobSearchCache.findMany({
-      where: {
-        createdAt: {
-          gte: new Date(Date.now() - 24 * 60 * 60 * 1000) // Last 24 hours
-        }
-      },
-      select: {
-        results: true
-      },
-      orderBy: {
-        createdAt: 'desc'
-      },
-      take: 5
-    })
-
-    // Extract companies from job search results
-    const companiesFromJobs = recentJobs.map(job => job.company).filter(Boolean)
-    const companiesFromCache = jobSearchResults.flatMap(cache => {
-      try {
-        const results = JSON.parse(cache.results)
-        return results.jobs?.map((job: any) => job.company).filter(Boolean) || []
-      } catch {
-        return []
-      }
-    })
-
-    // Combine and deduplicate companies
-    const allCompanies = [...new Set([...companiesFromJobs, ...companiesFromCache])]
+    // Extract companies from job applications
+    const allCompanies = [...new Set(recentJobs.map(job => job.company).filter(Boolean))]
     
     if (allCompanies.length === 0) {
       return NextResponse.json({ 
         success: true, 
         profiles: [],
-        message: 'No recent job search results found to extract companies from'
+        message: 'No recent job applications found to extract companies from'
       })
     }
 
@@ -148,41 +121,32 @@ export async function POST(request: NextRequest) {
     const savedConnections = []
     for (const profile of sortedProfiles.slice(0, 50)) { // Limit to 50 profiles
       try {
-        const connection = await prisma.linkedInConnection.upsert({
-          where: {
-            userId_linkedinId: {
-              userId,
-              linkedinId: profile.id
-            }
-          },
-          update: {
-            name: `${profile.firstName} ${profile.lastName}`,
-            title: profile.jobTitle || profile.headline,
-            company: profile.companyName || profile.targetCompany,
-            location: profile.location,
-            profileUrl: profile.profileUrl,
-            status: 'POTENTIAL',
-            searchCriteria: profile.searchCriteria,
-            targetCompany: profile.targetCompany,
-            mutualConnections: profile.mutualConnections,
-            lastInteraction: profile.lastInteraction ? new Date(profile.lastInteraction) : null,
-            updatedAt: new Date()
-          },
-          create: {
-            userId,
-            linkedinId: profile.id,
-            name: `${profile.firstName} ${profile.lastName}`,
-            title: profile.jobTitle || profile.headline,
-            company: profile.companyName || profile.targetCompany,
-            location: profile.location,
-            profileUrl: profile.profileUrl,
-            status: 'POTENTIAL',
-            searchCriteria: profile.searchCriteria,
-            targetCompany: profile.targetCompany,
-            mutualConnections: profile.mutualConnections,
-            lastInteraction: profile.lastInteraction ? new Date(profile.lastInteraction) : null
-          }
+        const existing = await prisma.linkedInConnection.findFirst({
+          where: { userId, linkedinId: profile.id }
         })
+        const connection = existing
+          ? await prisma.linkedInConnection.update({
+              where: { id: existing.id },
+              data: {
+                name: `${profile.firstName} ${profile.lastName}`,
+                title: profile.jobTitle || profile.headline,
+                company: profile.companyName || profile.targetCompany,
+                profileUrl: profile.profileUrl,
+                status: 'POTENTIAL',
+                updatedAt: new Date()
+              }
+            })
+          : await prisma.linkedInConnection.create({
+              data: {
+                userId,
+                linkedinId: profile.id,
+                name: `${profile.firstName} ${profile.lastName}`,
+                title: profile.jobTitle || profile.headline,
+                company: profile.companyName || profile.targetCompany,
+                profileUrl: profile.profileUrl,
+                status: 'POTENTIAL'
+              }
+            })
         savedConnections.push(connection)
       } catch (error) {
         console.error(`Error saving connection ${profile.id}:`, error)
@@ -216,16 +180,8 @@ export async function GET(request: NextRequest) {
 
     // Get auto-searched connections
     const connections = await prisma.linkedInConnection.findMany({
-      where: {
-        userId,
-        searchCriteria: {
-          in: ['1st_degree', 'recruiter', 'sales_manager']
-        }
-      },
-      orderBy: [
-        { searchCriteria: 'asc' }, // 1st_degree first
-        { mutualConnections: 'desc' }
-      ]
+      where: { userId },
+      orderBy: { createdAt: 'desc' }
     })
 
     return NextResponse.json({

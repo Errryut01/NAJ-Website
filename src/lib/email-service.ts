@@ -115,8 +115,8 @@ export class EmailService {
         email: profile.data.emailAddress!,
         provider: 'gmail',
         accessToken: tokens.access_token!,
-        refreshToken: tokens.refresh_token,
-        expiresAt: tokens.expiry_date,
+        refreshToken: tokens.refresh_token ?? undefined,
+        expiresAt: tokens.expiry_date ?? undefined,
         isActive: true
       }
 
@@ -229,7 +229,7 @@ export class EmailService {
         body,
         sentAt: new Date(),
         status: 'sent',
-        messageId: response.data.id
+        messageId: response.data.id ?? undefined
       }
 
       return emailMessage
@@ -248,7 +248,7 @@ export class EmailService {
 
     try {
       // Create SMTP transporter for Yahoo
-      const transporter = nodemailer.createTransporter({
+      const transporter = nodemailer.createTransport({
         service: 'yahoo',
         auth: {
           user: account.email,

@@ -26,6 +26,9 @@ interface UserProfile {
   education?: any
   linkedInProfileUrl?: string
   profilePictureUrl?: string
+  resumeUrl?: string
+  workingHours?: string | object
+  timezone?: string
 }
 
 interface JobSearchPreferences {
