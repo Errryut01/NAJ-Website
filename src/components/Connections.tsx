@@ -214,50 +214,14 @@ export default function Connections() {
     )
   }
 
-  const handleSendMessage = async (connectionId: string, message: string) => {
-    try {
-      const response = await fetch('/api/linkedin/automation', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'sendMessage',
-          connectionId,
-          message
-        })
-      })
-      
-      if (response.ok) {
-        // Refresh connections to show updated messages
-        loadConnections()
-      } else {
-        console.error('Failed to send message')
-      }
-    } catch (error) {
-      console.error('Error sending message:', error)
-    }
+  const handleSendMessage = async (_connectionId: string, _message: string) => {
+    // LinkedIn automation has been removed
+    console.warn('LinkedIn messaging is no longer available')
   }
 
-  const handleSendConnectionRequest = async (connection: LinkedInConnection) => {
-    try {
-      const response = await fetch('/api/linkedin/automation', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'sendConnectionRequest',
-          profileUrl: connection.profileUrl,
-          connectionMessage: `Hi ${connection.name}, I'd like to connect with you!`
-        })
-      })
-      
-      if (response.ok) {
-        // Refresh connections to show updated status
-        loadConnections()
-      } else {
-        console.error('Failed to send connection request')
-      }
-    } catch (error) {
-      console.error('Error sending connection request:', error)
-    }
+  const handleSendConnectionRequest = async (_connection: LinkedInConnection) => {
+    // LinkedIn automation has been removed
+    console.warn('LinkedIn connection requests are no longer available')
   }
 
   const handleRefreshConnections = () => {

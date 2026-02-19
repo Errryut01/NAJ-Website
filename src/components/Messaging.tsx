@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Send, MessageCircle, Clock, CheckCircle, AlertCircle, User, Building2, Mail, Linkedin, Plus, Trash2, RefreshCw, Search, XCircle } from 'lucide-react'
+import { Send, MessageCircle, Clock, CheckCircle, AlertCircle, User, Building2, Mail, Plus, Trash2, RefreshCw, Search, XCircle } from 'lucide-react'
 import { useUser } from '@/contexts/UserContext'
 
 interface Message {
@@ -69,17 +69,15 @@ export default function Messaging() {
   const [contacts, setContacts] = useState<Contact[]>([])
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [isLinkedInConnected, setIsLinkedInConnected] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [isLoadingAccounts, setIsLoadingAccounts] = useState(false)
   const [sampleEmails, setSampleEmails] = useState<any[]>([])
   const [isGeneratingEmails, setIsGeneratingEmails] = useState(false)
 
-  // Load email accounts and LinkedIn status
+  // Load email accounts
   useEffect(() => {
     loadEmailAccounts()
-    checkLinkedInStatus()
   }, [])
 
   // Load messages from database
@@ -274,17 +272,6 @@ export default function Messaging() {
     }
   }
 
-  const checkLinkedInStatus = async () => {
-    try {
-      const response = await fetch('/api/linkedin/automation?action=status')
-      const data = await response.json()
-      setIsLinkedInConnected(data.isLoggedIn || false)
-    } catch (error) {
-      console.error('Error checking LinkedIn status:', error)
-      setIsLinkedInConnected(false)
-    }
-  }
-
   const generateSampleEmails = async () => {
     if (!user?.id) return
     
@@ -371,11 +358,6 @@ export default function Messaging() {
       console.error('Error connecting Gmail:', error)
       setErrorMessage('Failed to connect Gmail')
     }
-  }
-
-  const connectLinkedIn = async () => {
-    // This would open the LinkedIn automation page
-    window.location.href = '/?section=linkedin-automation'
   }
 
   const getStatusIcon = (status: Message['status']) => {
@@ -574,20 +556,6 @@ export default function Messaging() {
                 className="text-sm text-blue-600 hover:text-blue-800 font-medium"
               >
                 Connect Gmail
-              </button>
-            )}
-          </div>
-          <div className="flex items-center space-x-2">
-            <Linkedin className="w-4 h-4 text-gray-500" />
-            <span className="text-sm text-gray-600">LinkedIn:</span>
-            {isLinkedInConnected ? (
-              <span className="text-sm text-green-600 font-medium">Connected</span>
-            ) : (
-              <button
-                onClick={connectLinkedIn}
-                className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-              >
-                Connect LinkedIn
               </button>
             )}
           </div>

@@ -13,10 +13,7 @@ console.log('🔍 Testing Job Search Automation Dependencies...\n');
 console.log('1. 📦 Checking installed packages...');
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 const requiredDeps = [
-  'puppeteer-extra',
-  'puppeteer-extra-plugin-stealth',
   'cheerio',
-  'playwright',
   'googleapis',
   'nodemailer',
   'openai',
@@ -86,25 +83,10 @@ if (fs.existsSync(schemaPath)) {
   console.log('   ❌ Prisma schema not found');
 }
 
-// Test 5: Check if Chrome is installed for Puppeteer
-console.log('\n5. 🌐 Checking Puppeteer Chrome installation...');
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-puppeteer.use(StealthPlugin());
-
-puppeteer.launch({ headless: true }).then(async (browser) => {
-  console.log('   ✅ Chrome browser is available for Puppeteer');
-  await browser.close();
-}).catch((error) => {
-  console.log('   ❌ Chrome browser not available:', error.message);
-  console.log('   Run: npx puppeteer browsers install chrome');
-});
-
-// Test 6: Check API endpoints
-console.log('\n6. 🔌 Checking API endpoints...');
+// Test 5: Check API endpoints
+console.log('\n5. 🔌 Checking API endpoints...');
 const apiEndpoints = [
   'src/app/api/auth/linkedin/route.ts',
-  'src/app/api/linkedin/automation/route.ts',
   'src/app/api/email/auth/route.ts',
   'src/app/api/jobs/analyze/route.ts'
 ];
@@ -112,8 +94,8 @@ const apiEndpoints = [
 const existingEndpoints = apiEndpoints.filter(endpoint => fs.existsSync(endpoint));
 console.log(`   ✅ ${existingEndpoints.length}/${apiEndpoints.length} API endpoints found`);
 
-// Test 7: Check components
-console.log('\n7. 🧩 Checking React components...');
+// Test 6: Check components
+console.log('\n6. 🧩 Checking React components...');
 const components = [
   'src/components/ProfileSetup.tsx',
   'src/components/JobSearchNew.tsx',

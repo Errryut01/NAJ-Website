@@ -87,11 +87,6 @@ npx prisma migrate dev --name add_linkedin_profile_url
 npx prisma generate
 ```
 
-### 4. Install Chrome for Puppeteer
-```bash
-npx puppeteer browsers install chrome
-```
-
 ## 🚀 Running the Application
 
 ### Development Mode
@@ -113,12 +108,6 @@ npm start
 3. Add redirect URI: `http://localhost:3000/api/auth/linkedin/callback`
 4. Get Client ID and Client Secret
 5. Update `.env.local` with credentials
-
-### 2. LinkedIn Automation Setup
-1. The app uses Puppeteer for browser automation
-2. Chrome will open automatically for LinkedIn login
-3. Handle 2FA if required
-4. Browser session is maintained for subsequent operations
 
 ## 📧 Email Setup
 
@@ -204,17 +193,13 @@ npm start
    - Reset database: `npx prisma migrate reset --force`
    - Check DATABASE_URL in `.env.local`
 
-4. **Puppeteer Issues**
-   - Install Chrome: `npx puppeteer browsers install chrome`
-   - Check Chrome executable path
-
 ### Debug Mode
 ```bash
 # Enable debug logging
 DEBUG=* npm run dev
 
 # Check specific service
-DEBUG=linkedin-automation npm run dev
+DEBUG=* npm run dev
 ```
 
 ## 📊 Monitoring

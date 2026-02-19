@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
           company: connection.company
         },
         job: {
-          title: jobApplication.title,
+          title: jobApplication.jobTitle,
           company: jobApplication.company
         }
       }
@@ -159,7 +159,7 @@ export async function GET(request: NextRequest) {
               company: connection.company
             },
             job: {
-              title: jobApplication.title,
+              title: jobApplication.jobTitle,
               company: jobApplication.company
             }
           })

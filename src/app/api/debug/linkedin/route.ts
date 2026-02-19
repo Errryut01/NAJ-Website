@@ -16,13 +16,13 @@ export async function GET(request: NextRequest) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       include: {
-        linkedinCredentials: true,
+        linkedInCredentials: true,
         profile: true
       }
     })
 
     console.log('Debug LinkedIn - user found:', !!user)
-    console.log('Debug LinkedIn - has linkedinCredentials:', !!user?.linkedinCredentials)
+    console.log('Debug LinkedIn - has linkedInCredentials:', !!user?.linkedInCredentials)
     console.log('Debug LinkedIn - has profile:', !!user?.profile)
 
     // Check environment variables
@@ -53,12 +53,12 @@ export async function GET(request: NextRequest) {
         id: user.id,
         email: user.email,
         name: user.name,
-        hasLinkedInCredentials: !!user.linkedinCredentials,
+        hasLinkedInCredentials: !!user.linkedInCredentials,
         hasProfile: !!user.profile,
-        linkedinCredentials: user.linkedinCredentials ? {
-          hasAccessToken: !!user.linkedinCredentials.accessToken,
-          hasRefreshToken: !!user.linkedinCredentials.refreshToken,
-          expiresAt: user.linkedinCredentials.expiresAt
+        linkedInCredentials: user.linkedInCredentials ? {
+          hasAccessToken: !!user.linkedInCredentials.accessToken,
+          hasRefreshToken: !!user.linkedInCredentials.refreshToken,
+          expiresAt: user.linkedInCredentials.expiresAt
         } : null,
         profile: user.profile ? {
           firstName: user.profile.firstName,

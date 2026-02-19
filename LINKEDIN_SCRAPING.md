@@ -6,9 +6,9 @@ This application uses the RapidAPI LinkedIn Job Search API to search for job ope
 
 ## How It Works
 
-### 1. LinkedIn Job Scraper (`src/lib/linkedin-job-scraper.ts`)
+### 1. LinkedIn Job Search (`src/lib/linkedin-job-api.ts`)
 
-The scraper uses Puppeteer to automate a browser and navigate to LinkedIn's job search page with the user's search criteria.
+The app uses the RapidAPI LinkedIn Job Search API to search for job openings on LinkedIn.
 
 **Key Features:**
 - **Dynamic URL Building**: Constructs LinkedIn job search URLs with user parameters
@@ -61,31 +61,15 @@ Where:
 ## Technical Implementation
 
 ### Dependencies
-- **Puppeteer**: Browser automation
+- **RapidAPI LinkedIn API**: Job search
 - **TypeScript**: Type safety
 - **Next.js API Routes**: Backend endpoints
-
-### Browser Configuration
-```typescript
-const browser = await puppeteer.launch({
-  headless: true,
-  args: [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    '--disable-dev-shm-usage',
-    '--disable-accelerated-2d-canvas',
-    '--no-first-run',
-    '--no-zygote',
-    '--disable-gpu'
-  ]
-})
-```
 
 ### Error Handling
 - **Network Timeouts**: 30-second timeout for page loads
 - **Element Selection**: 10-second timeout for job elements
 - **Graceful Fallback**: Returns mock data if scraping fails
-- **Browser Cleanup**: Properly closes browser instances
+- **API Fallback**: Returns mock data if API fails
 
 ## Usage
 

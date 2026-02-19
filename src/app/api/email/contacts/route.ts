@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { emailService } from '@/lib/email-service'
+import { emailService, type EmailContact } from '@/lib/email-service'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Account not found' }, { status: 404 })
     }
 
-    let contacts = []
+    let contacts: EmailContact[] = []
     
     if (account.provider === 'gmail') {
       contacts = await emailService.getGmailContacts(accountId)
