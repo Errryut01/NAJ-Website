@@ -32,14 +32,14 @@ export default function Home() {
                   </p>
                   <div className="grid w-full min-w-0 grid-cols-1 gap-4 rounded-2xl border border-white/10 bg-white/90 p-4 sm:grid-cols-2 sm:p-6 lg:grid-cols-4">
                     {[
-                      { label: 'Amazon Web Services', type: 'logo', src: '/logo-aws.png', className: 'h-28 w-auto max-w-[10rem] sm:h-40 sm:max-w-[26rem]' },
-                      { label: 'Couchbase', type: 'logo', src: '/logo-couchbase.png', className: 'h-24 w-auto max-w-[8rem] sm:h-36 sm:max-w-[24rem]' },
-                      { label: 'Dell', type: 'logo', src: '/logo-dell.png', className: 'h-20 w-auto max-w-[7rem] sm:h-32 sm:max-w-[20rem]' },
-                      { label: 'Cisco', type: 'logo', src: '/logo-cisco-v3.png', className: 'h-24 w-auto max-w-[9rem] sm:h-36 sm:max-w-[28rem]' },
-                      { label: 'Fortinet', type: 'logo', src: '/logo-fortinet.png', className: 'h-24 w-auto max-w-[9rem] sm:h-36 sm:max-w-[28rem]' },
-                      { label: 'NetApp', type: 'logo', src: '/logo-netapp.png', className: 'h-20 w-auto max-w-[7rem] sm:h-32 sm:max-w-[20rem]' },
-                      { label: 'Oracle', type: 'logo', src: '/logo-oracle.png', className: 'h-20 w-auto max-w-[14rem] object-contain sm:h-28 sm:max-w-[22rem]' },
-                      { label: 'mongoDB', type: 'logo', src: '/logo-mongodb.png', className: 'h-24 w-auto max-w-[8rem] sm:h-36 sm:max-w-[24rem]' },
+                      { label: 'Amazon Web Services', type: 'logo', src: '/logo-aws.png', className: 'h-[10.5rem] w-auto max-w-[15rem] sm:h-40 sm:max-w-[26rem]' },
+                      { label: 'Couchbase', type: 'logo', src: '/logo-couchbase.png', className: 'h-[9rem] w-auto max-w-[12rem] sm:h-36 sm:max-w-[24rem]' },
+                      { label: 'Dell', type: 'logo', src: '/logo-dell.png', className: 'h-[7.5rem] w-auto max-w-[10.5rem] sm:h-32 sm:max-w-[20rem]' },
+                      { label: 'Cisco', type: 'logo', src: '/logo-cisco-v3.png', className: 'h-[9rem] w-auto max-w-[13.5rem] sm:h-36 sm:max-w-[28rem]' },
+                      { label: 'Fortinet', type: 'logo', src: '/logo-fortinet.png', className: 'h-[9rem] w-auto max-w-[13.5rem] sm:h-36 sm:max-w-[28rem]' },
+                      { label: 'NetApp', type: 'logo', src: '/logo-netapp.png', className: 'h-[7.5rem] w-auto max-w-[10.5rem] sm:h-32 sm:max-w-[20rem]' },
+                      { label: 'Oracle', type: 'logo', src: '/logo-oracle.png', className: 'h-[7.5rem] w-auto max-w-[21rem] object-contain sm:h-28 sm:max-w-[22rem]' },
+                      { label: 'mongoDB', type: 'logo', src: '/logo-mongodb.png', className: 'h-[9rem] w-auto max-w-[12rem] sm:h-36 sm:max-w-[24rem]' },
                     ].map((item) => (
                       <div
                         key={item.label}
