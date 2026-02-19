@@ -18,7 +18,7 @@ function buildEmailHtml(
   return `
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
       <h2 style="color:#0c071a;">New ${formType} Submission</h2>
-      <p style="color:#666;">Submitted from networkajob.com</p>
+      <p style="color:#666;">Submitted from networkajob.io</p>
       <table style="width:100%;border-collapse:collapse;margin-top:16px;background:#f9f9f9;border-radius:8px;overflow:hidden;">
         ${rows}
       </table>
