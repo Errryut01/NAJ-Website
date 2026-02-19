@@ -12,7 +12,7 @@ const EMPLOYERS_NAV_ITEMS = [
 
 export default function EmployersPage() {
   return (
-    <div className="naj-wallpaper min-h-screen bg-[#0c071a] text-slate-100">
+    <div className="naj-wallpaper min-h-screen min-w-0 overflow-x-hidden bg-[#0c071a] text-slate-100">
       <MobileNav navItems={EMPLOYERS_NAV_ITEMS} />
 
       <main>

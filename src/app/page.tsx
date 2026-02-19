@@ -5,7 +5,7 @@ import MobileNav from '@/components/MobileNav'
 
 export default function Home() {
   return (
-    <div className="naj-wallpaper min-h-screen bg-[#0c071a] text-slate-100">
+    <div className="naj-wallpaper min-h-screen min-w-0 overflow-x-hidden bg-[#0c071a] text-slate-100">
       <MobileNav />
 
       <main>
@@ -18,17 +18,16 @@ export default function Home() {
                     <Image src="/naj-logo-2026-v2.png" alt="NAJ logo" fill className="object-contain" />
                   </div>
                 </div>
-                <div className="text-center text-amber-300 mb-32 mt-8 sm:mb-48 sm:mt-12">
-                  <p className="text-3xl font-semibold tracking-wide sm:text-5xl md:text-6xl lg:text-7xl">
-                    Network Ferociously
-                  </p>
+                <div className="mb-32 mt-8 flex flex-col items-center text-center text-amber-300 sm:mb-48 sm:mt-12">
+                  <span className="text-[3.75rem] font-semibold tracking-wide sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Network</span>
+                  <span className="text-[3.75rem] font-semibold tracking-wide sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Ferociously</span>
                 </div>
                 <div className="space-y-10">
-                  <p className="text-center text-lg font-semibold uppercase tracking-[0.3em] text-amber-300 sm:text-xl">
+                  <p className="text-center text-base font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-lg sm:tracking-[0.25em] lg:tracking-[0.3em]">
                     NAJ is a Veteran and Minority Owned Business
                   </p>
                   <div className="h-8"></div>
-                  <p className="mt-10 text-center text-base font-semibold uppercase tracking-[0.3em] text-amber-300 sm:text-lg">
+                  <p className="mt-10 text-center text-sm font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-base sm:tracking-[0.25em] lg:tracking-[0.3em]">
                     Our mentees have launched careers at top tech companies
                   </p>
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl border border-white/10 bg-white/90 p-6">
