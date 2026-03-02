@@ -12,9 +12,46 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://networkajob.io";
+
 export const metadata: Metadata = {
-  title: "NAJ",
-  description: "Boutique recruiting and career advisory for modern teams and candidates.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "NAJ | Tech Sales Recruiting & Career Coaching | Network Ferociously",
+    template: "%s | NAJ",
+  },
+  description:
+    "NAJ helps candidates break into Tech sales and helps employers build revenue teams. Former hiring managers provide personalized coaching, interview prep, and proven playbooks. Veteran and minority owned.",
+  keywords: [
+    "tech sales recruiting",
+    "SaaS sales careers",
+    "sales development representative",
+    "account executive",
+    "sales coaching",
+    "career coaching",
+    "veteran owned business",
+    "GTM hiring",
+    "sales hiring",
+  ],
+  authors: [{ name: "NAJ", url: SITE_URL }],
+  creator: "NAJ",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    siteName: "NAJ",
+    title: "NAJ | Tech Sales Recruiting & Career Coaching",
+    description: "Break into Tech sales or build your revenue team. Personalized coaching from former hiring managers. Veteran and minority owned.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NAJ | Tech Sales Recruiting & Career Coaching",
+    description: "Break into Tech sales or build your revenue team. Personalized coaching from former hiring managers.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export const viewport = {

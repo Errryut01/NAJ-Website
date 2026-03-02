@@ -3,9 +3,31 @@ import { CandidateIntakeForm } from '@/components/CandidateIntakeForm'
 import { ContactForm } from '@/components/ContactForm'
 import MobileNav from '@/components/MobileNav'
 
+export const metadata = {
+  title: "Tech Sales Recruiting & Career Coaching",
+  description:
+    "Break into Tech sales with personalized coaching from former hiring managers. SDR, BDR, and AE roles. One-on-one coaching, proven playbooks, and direct connections to hiring managers.",
+  alternates: { canonical: "https://networkajob.io" },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "NAJ",
+  url: "https://networkajob.io",
+  description: "Tech sales recruiting and career coaching. Former hiring managers help candidates break into SDR, BDR, and AE roles. Veteran and minority owned.",
+  foundingDate: "2024",
+  areaServed: "United States",
+  serviceType: ["Recruiting", "Career Coaching", "Sales Training"],
+};
+
 export default function Home() {
   return (
     <div className="naj-wallpaper min-h-screen min-w-0 overflow-x-hidden bg-[#0c071a] text-slate-100">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <MobileNav />
 
       <main>
@@ -207,7 +229,7 @@ export default function Home() {
                     <div className="relative aspect-[4/3] w-full overflow-hidden">
                       <img
                         src={role.image}
-                        alt=""
+                        alt={`${role.title} - ${role.subtitle}`}
                         className="h-full w-full object-cover"
                       />
                     </div>

@@ -2,6 +2,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import MobileNav from '@/components/MobileNav'
 
+export const metadata = {
+  title: "For Employers | Build Revenue Teams with GTM Talent",
+  description:
+    "NAJ partners with growth-stage companies to design roles, source top Tech sales candidates, and close hires that accelerate pipeline and revenue.",
+  alternates: { canonical: "https://networkajob.io/employers" },
+};
+
 const EMPLOYERS_NAV_ITEMS = [
   { id: 'home', label: 'Home', href: '/' },
   { id: 'employers', label: 'For Employers', href: '/employers' },
