@@ -18,15 +18,57 @@ export default function Home() {
                     <Image src="/naj-logo-2026-v2.png" alt="NAJ logo" fill className="object-contain" />
                   </div>
                 </div>
-                <div className="mb-32 mt-8 flex flex-col items-center text-center text-amber-300 sm:mb-48 sm:mt-12">
-                  <span className="text-[3.75rem] font-semibold tracking-wide sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Network</span>
-                  <span className="text-[3.75rem] font-semibold tracking-wide sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Ferociously</span>
+                <div className="mb-32 mt-8 flex flex-col items-center text-center sm:mb-48 sm:mt-12">
+                  <span className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-[3.75rem] font-semibold tracking-wide text-transparent sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Network</span>
+                  <span className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-[3.75rem] font-semibold tracking-wide text-transparent sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Ferociously</span>
                 </div>
                 <div className="space-y-10">
                   <p className="max-w-full break-words text-center text-base font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-lg sm:tracking-[0.25em] lg:tracking-[0.3em]">
                     NAJ is a Veteran and Minority Owned Business
                   </p>
-                  <div className="h-8"></div>
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {[
+                      {
+                        title: 'For Candidates',
+                        description: 'Build your Tech sales story, sharpen your pitch, and get connected to hiring managers looking for hungry, coachable talent. We will develop a plan using our proven method to address your skill gap and help you land the role you want.',
+                        href: '#candidates',
+                        image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
+                      },
+                      {
+                        title: 'For Transitioning Military',
+                        description: 'Translate military leadership into high-impact Tech sales careers. We help veterans map their experience to Tech sales roles. We will develop a plan using our proven method to address your skill gap and help you land the role you want.',
+                        href: '#veterans',
+                        image: '/transitioning-military.png',
+                      },
+                      {
+                        title: 'For Employers',
+                        description: 'Build revenue teams with proven GTM talent. We design roles, source top candidates, and close hires that accelerate pipeline.',
+                        href: '/employers',
+                        image: 'https://images.unsplash.com/photo-1521790797524-b2497295b8a0?auto=format&fit=crop&w=800&q=80',
+                      },
+                    ].map((item) => (
+                      <a
+                        key={item.title}
+                        href={item.href}
+                        className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-lg transition-shadow hover:shadow-xl"
+                      >
+                        <div className="relative aspect-[4/3] w-full overflow-hidden">
+                          <img
+                            src={item.image}
+                            alt=""
+                            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="flex flex-1 flex-col p-6">
+                          <h3 className="mb-3 text-lg font-semibold text-slate-900">{item.title}</h3>
+                          <p className="mb-4 flex-1 text-sm text-slate-600">{item.description}</p>
+                          <span className="text-sm font-medium text-amber-600 underline decoration-amber-600/50 underline-offset-2 group-hover:text-amber-500">
+                            Learn More
+                          </span>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
                   <p className="mt-10 max-w-full break-words text-center text-sm font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-base sm:tracking-[0.25em] lg:tracking-[0.3em]">
                     Our mentees have launched careers at top tech companies
                   </p>
@@ -56,7 +98,7 @@ export default function Home() {
                 </div>
                 <p className="mt-24 text-sm font-semibold uppercase tracking-[0.2em] text-amber-300">Candidate Career Partner</p>
                 <h1 className="text-4xl font-semibold tracking-tight text-slate-100 lg:text-5xl">
-                  Break into SaaS &amp; Tech sales with coaching, strategy, and a proven playbook.
+                  Break into Tech sales with coaching, strategy, and a proven playbook.
                 </h1>
                 <p className="text-lg text-slate-300">
                   NAJ helps candidates pivot into high-growth sales roles through personalized coaching,
@@ -82,12 +124,12 @@ export default function Home() {
               <div className="space-y-4 lg:pr-6">
                 <h2 className="text-3xl font-semibold tracking-tight">For Candidates</h2>
                 <p className="text-slate-300">
-                  Build your SaaS sales story, sharpen your pitch, and get connected to hiring managers
+                  Build your Tech sales story, sharpen your pitch, and get connected to hiring managers
                   looking for hungry, coachable talent. Develop and use the skills required for these positions.
                   Show the hiring manager you will provide value on day one.
                 </p>
                 <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0f081d] to-amber-900/20 p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold text-slate-100">Common SaaS Sales Titles</h3>
+                  <h3 className="text-lg font-semibold text-slate-100">Common Tech Sales Titles</h3>
                   <div className="mt-6 space-y-5">
                     {[
                       {
@@ -171,7 +213,7 @@ export default function Home() {
               <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0f081d] to-amber-900/20 p-6 shadow-sm lg:ml-4">
                 <h3 className="text-lg font-semibold text-slate-100">Candidate Intake</h3>
                 <p className="mt-2 text-sm text-slate-300">
-                  Share your resume or LinkedIn profile and we will map out a plan to break into SaaS sales.
+                  Share your LinkedIn profile and we will map out a plan to break into Tech sales.
                 </p>
                 <CandidateIntakeForm />
               </div>
@@ -187,11 +229,14 @@ export default function Home() {
                   For Transitioning Veterans
                 </p>
                 <h2 className="text-4xl font-semibold tracking-tight">
-                  Translate military leadership into high-impact SaaS sales careers.
+                  Translate military leadership into high-impact Tech sales careers.
                 </h2>
                 <p className="text-lg text-slate-300">
-                  We help veterans map their experience to GTM roles, build a compelling story, and practice the
-                  skills needed to win interviews and succeed on day one.
+                  We help veterans map their experience to Tech sales roles, build a compelling story, and practice the
+                  skills needed to win interviews and succeed on day one. Our approach includes identifying your
+                  marketable skills, translating your military experience into language hiring managers understand,
+                  selecting positions that align with your skills, credentials, and experience, and developing the sales
+                  skills required for these roles.
                 </p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-[#140a26]/70 p-7 text-base text-slate-300 shadow-sm">
@@ -204,12 +249,11 @@ export default function Home() {
                     allowFullScreen
                   />
                 </div>
-                <ul className="space-y-4">
-                  <li>Identify Marketable Skills</li>
-                  <li>Translate Your Military Experience</li>
-                  <li>Select Positions That Align With Your Skills, Credentials, and Experience</li>
-                  <li>Develop Sales Skills</li>
-                </ul>
+                <h3 className="mb-2 text-lg font-semibold text-slate-100">Veteran Intake</h3>
+                <p className="mb-4 text-sm text-slate-300">
+                  Share your LinkedIn profile and we will map out a plan to transition into Tech sales.
+                </p>
+                <CandidateIntakeForm formType="Veteran Intake" />
               </div>
             </div>
           </div>
@@ -217,24 +261,12 @@ export default function Home() {
 
         <section id="team" className="border-t border-white/10 bg-[#0f081d]/90">
           <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-            <div className="space-y-4 text-center">
+            <div className="space-y-6 text-center">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-300">About the Team</p>
               <h2 className="text-3xl font-semibold tracking-tight">People first recruiting and coaching with domain expertise.</h2>
-              <p className="mx-auto max-w-2xl text-slate-300">
-                We blend GTM hiring experience with a hands-on, high-touch search approach.
+              <p className="mx-auto max-w-3xl text-left text-slate-300">
+                Our coaching is built on over 20 years of GTM tech sales experience—from individual contributor roles through leadership. We offer personalized career strategy, interview preparation, and hands-on skill development tailored to each candidate&apos;s goals. For organizations looking to staff GTM roles, this depth of experience means we understand what success looks like in the field: we can identify candidates who will ramp quickly, build pipeline, and close business. We blend GTM hiring expertise with a hands-on, high-touch approach to recruiting and coaching.
               </p>
-            </div>
-            <div className="mt-10 flex flex-col items-center gap-8">
-              <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#140a26]/80 p-6 text-center shadow-lg shadow-amber-900/30">
-                <div className="relative mx-auto h-56 w-44 overflow-hidden rounded-2xl bg-gradient-to-br from-[#140a26] to-amber-900/30">
-                  <Image src="/brian-keilers.png" alt="Brian Keilers" fill className="object-cover" />
-                </div>
-                <h3 className="mt-6 text-lg font-semibold text-slate-100">Brian Keilers</h3>
-                <p className="text-sm text-amber-300">Mentor and Founder</p>
-                <p className="mt-3 text-sm text-slate-300">
-                  20+ years in SaaS and Tech Sales and Leadership
-                </p>
-              </div>
             </div>
           </div>
         </section>

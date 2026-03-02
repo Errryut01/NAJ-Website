@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       name: 'Name',
       fullName: 'Full Name',
       email: 'Email',
-      resumeOrLinkedinUrl: 'Resume or LinkedIn URL',
+      resumeOrLinkedinUrl: 'LinkedIn URL',
       companyOrRole: 'Company / Role',
       message: 'Message',
     }

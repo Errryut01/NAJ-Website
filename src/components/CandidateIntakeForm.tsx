@@ -2,7 +2,11 @@
 
 import { useState } from 'react'
 
-export function CandidateIntakeForm() {
+type IntakeFormProps = {
+  formType?: string
+}
+
+export function CandidateIntakeForm({ formType = 'Candidate Intake' }: IntakeFormProps) {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -16,7 +20,7 @@ export function CandidateIntakeForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          formType: 'Candidate Intake',
+          formType,
           name,
           email,
           resumeOrLinkedinUrl,
@@ -58,11 +62,11 @@ export function CandidateIntakeForm() {
       </div>
       <div>
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Resume or LinkedIn URL
+          LinkedIn URL
         </label>
         <input
           type="text"
-          placeholder="Paste resume link or LinkedIn URL"
+          placeholder="Paste your LinkedIn profile URL"
           value={resumeOrLinkedinUrl}
           onChange={(e) => setResumeOrLinkedinUrl(e.target.value)}
           className="mt-2 w-full rounded-md border border-white/10 bg-[#140a26]/80 px-3 py-2 text-sm text-slate-100 focus:border-amber-300 focus:outline-none"
