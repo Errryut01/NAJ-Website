@@ -124,90 +124,38 @@ export default function Home() {
               <div className="space-y-4 lg:pr-6">
                 <h2 className="text-3xl font-semibold tracking-tight">For Candidates</h2>
                 <p className="text-slate-300">
-                  Build your Tech sales story, sharpen your pitch, and get connected to hiring managers
-                  looking for hungry, coachable talent. Develop and use the skills required for these positions.
-                  Show the hiring manager you will provide value on day one.
+                  We are former hiring managers who built and scaled high-performing tech sales teams.
+                  We know exactly what top SaaS companies look for on day one—and we help you deliver it from the start.
+                  That means you ramp faster, hit quota sooner, and unlock a higher earning ceiling right out of the gate.
                 </p>
-                <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0f081d] to-amber-900/20 p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold text-slate-100">Common Tech Sales Titles</h3>
-                  <div className="mt-6 space-y-5">
-                    {[
-                      {
-                        title: 'Sales Development Representative (SDR) / Business Development Representative (BDR)',
-                        definition: 'Entry-level role focused on lead generation, outreach, and booking meetings.',
-                        base: 'Base Salary: $55,000 – $75,000 (median around $60,000)',
-                        ote: 'OTE: $70,000 – $100,000 (often $85,000 median)',
-                        note: 'Top performers can reach $120,000+.',
-                        skillsLabel: 'Skills We Will Develop and Practice',
-                        skills: [
-                          'Identifying your Ideal Customer Profile',
-                          'Account Research',
-                          'Informational Interviewing',
-                          'Social Media',
-                          'Proactive Outreach',
-                          'Interviewing',
-                          'Relentless Networking',
-                        ],
-                      },
-                      {
-                        title: 'SMB/Mid-Market Account Executive (AE)',
-                        definition: 'Core closer role for smaller deals with faster sales cycles.',
-                        base: 'Base Salary: $70,000 – $100,000',
-                        ote: 'OTE: $110,000 – $200,000 (common $130,000–$180,000)',
-                        note: 'Overall AE medians: Base ~$90,000–$110,000; OTE ~$150,000–$200,000.',
-                        skillsLabel: 'Skills We Will Develop and Practice',
-                        skills: [
-                          'Consultative/Value Based Selling',
-                          'Negotiation',
-                          'Executive Presence',
-                          'Stakeholder Management',
-                          'Mock Call Prep',
-                          'Pipeline and Forecast Accuracy',
-                          'Relentless Networking',
-                        ],
-                      },
-                      {
-                        title: 'Enterprise/Strategic Account Executive (AE)',
-                        definition: 'Closes large, complex deals with multiple stakeholders and long cycles.',
-                        base: 'Base Salary: $100,000 – $150,000+',
-                        ote: 'OTE: $180,000 – $320,000+ (median often $190,000–$250,000)',
-                        note: 'Top earners $300,000–$400,000+ with accelerators.',
-                        skillsLabel: 'Skills We Will Develop and Practice',
-                        skills: [
-                          'Consultative/Value Based Selling',
-                          'Negotiation',
-                          'Executive Presence',
-                          'Stakeholder Management',
-                          'Mock Call Prep',
-                          'Pipeline and Forecast Accuracy',
-                          'Multi-threaded Selling',
-                          'Relentless Networking',
-                        ],
-                      },
-                    ].map((role) => (
-                      <div key={role.title} className="rounded-xl border border-white/10 bg-[#140a26]/70 p-4 shadow-sm">
-                        <p className="text-sm font-semibold text-slate-100">{role.title}</p>
-                        <p className="mt-1 text-sm text-slate-300">{role.definition}</p>
-                        <div className="mt-3 space-y-2 text-xs text-slate-200">
-                          <div className="rounded-lg bg-amber-400/15 px-3 py-2 text-amber-100/90">{role.base}</div>
-                          <div className="rounded-lg bg-amber-400/15 px-3 py-2 text-amber-100/90">{role.ote}</div>
-                          <div className="rounded-lg bg-amber-500/25 px-3 py-2 text-amber-100/90">{role.note}</div>
-                        </div>
-                        {role.skills && role.skillsLabel && (
-                          <div className="mt-4 rounded-lg bg-[#0f081d]/80 px-3 py-3 text-xs text-slate-200">
-                            <p className="text-xs font-semibold text-slate-100">{role.skillsLabel}</p>
-                            <div className="mt-2 flex flex-wrap gap-2">
-                              {role.skills.map((skill: string) => (
-                                <span key={skill} className="rounded-full bg-[#1c1030] px-3 py-1 text-amber-100">
-                                  {skill}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                <p className="text-slate-300">
+                  You&apos;ll master the skills that actually move the needle:
+                </p>
+                <ul className="list-disc space-y-1 pl-5 text-slate-300">
+                  <li>Building consistent pipeline</li>
+                  <li>Running sharp discovery calls</li>
+                  <li>Closing complex deals</li>
+                  <li>Managing stakeholders like a pro</li>
+                </ul>
+                <p className="text-slate-300">
+                  You&apos;ll craft a compelling tech sales story, refine your pitch to stand out in interviews, and get direct connections to hiring managers actively seeking hungry, coachable talent.
+                </p>
+                <p className="text-slate-300">
+                  Every candidate gets a fully personalized plan plus dedicated one-on-one coaching tailored to your background, goals, and timeline.
+                </p>
+                <p className="font-medium text-amber-300">
+                  Ready to stop guessing and start winning in tech sales?
+                </p>
+                <div className="rounded-xl border border-white/10 bg-[#140a26]/60 px-5 py-4">
+                  <h3 className="mb-3 text-base font-semibold uppercase tracking-wide text-amber-300 sm:text-lg">Our Structure</h3>
+                  <ul className="list-disc space-y-2 pl-5 text-sm text-slate-300">
+                    <li><span className="font-medium text-slate-200">Build your ICP</span> — Define your ideal customer profile</li>
+                    <li><span className="font-medium text-slate-200">Put together a target list</span> — Identify companies and roles that fit</li>
+                    <li><span className="font-medium text-slate-200">Gather information</span> — Research accounts, stakeholders, and opportunities</li>
+                    <li><span className="font-medium text-slate-200">Build a network</span> — Connect with hiring managers and insiders</li>
+                    <li><span className="font-medium text-slate-200">Cultivate champions</span> — Develop advocates who will vouch for you</li>
+                    <li><span className="font-medium text-slate-200">Position yourself and win</span> — Stand out and land the role</li>
+                  </ul>
                 </div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0f081d] to-amber-900/20 p-6 shadow-sm lg:ml-4">
@@ -216,6 +164,82 @@ export default function Home() {
                   Share your LinkedIn profile and we will map out a plan to break into Tech sales.
                 </p>
                 <CandidateIntakeForm />
+              </div>
+            </div>
+            <div className="mt-10">
+              <p className="mb-6 text-center text-base font-semibold text-amber-300 sm:text-lg">
+                Positions NAJ Prepares Candidates For
+              </p>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {[
+                  {
+                    title: 'SDR / BDR',
+                    subtitle: 'Sales Development Representative / Business Development Representative',
+                    definition: 'Entry-level role focused on lead generation, outreach, and booking meetings.',
+                    base: '$55K – $75K base',
+                    ote: '$70K – $100K OTE',
+                    skills: ['Ideal Customer Profile', 'Account Research', 'Proactive Outreach', 'Interviewing', 'Networking'],
+                    image: '/sdr-bdr.png',
+                  },
+                  {
+                    title: 'SMB / Mid-Market AE',
+                    subtitle: 'Account Executive',
+                    definition: 'Core closer role for smaller deals with faster sales cycles.',
+                    base: '$70K – $100K base',
+                    ote: '$110K – $200K OTE',
+                    skills: ['Consultative Selling', 'Negotiation', 'Executive Presence', 'Mock Call Prep', 'Pipeline Accuracy'],
+                    image: '/mid-market-ae.png',
+                  },
+                  {
+                    title: 'Enterprise AE',
+                    subtitle: 'Strategic Account Executive',
+                    definition: 'Closes large, complex deals with multiple stakeholders and long cycles.',
+                    base: '$100K – $150K+ base',
+                    ote: '$180K – $320K+ OTE',
+                    skills: ['Multi-threaded Selling', 'Stakeholder Management', 'Negotiation', 'Forecast Accuracy', 'Networking'],
+                    image: '/enterprise-ae.png',
+                  },
+                ].map((role) => (
+                  <div
+                    key={role.title}
+                    className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#140a26]/80 shadow-lg shadow-amber-900/10"
+                  >
+                    <div className="relative aspect-[4/3] w-full overflow-hidden">
+                      <img
+                        src={role.image}
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col gap-4 p-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-amber-300 underline decoration-amber-300/60">{role.title}</h3>
+                        <p className="mt-1 text-sm text-slate-400">{role.subtitle}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-wider text-amber-300/90">Role Definition</p>
+                        <p className="mt-2 text-sm leading-relaxed text-slate-300">{role.definition}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-wider text-amber-300/90">Typical Salaries</p>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          <span className="rounded-lg bg-amber-400/20 px-3 py-1.5 text-sm font-medium text-amber-200">{role.base}</span>
+                          <span className="rounded-lg bg-amber-400/20 px-3 py-1.5 text-sm font-medium text-amber-200">{role.ote}</span>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-wider text-amber-300/90">Skills Trained</p>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {role.skills.map((skill) => (
+                            <span key={skill} className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-200">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
