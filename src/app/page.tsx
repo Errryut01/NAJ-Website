@@ -137,40 +137,112 @@ export default function Home() {
 
               </div>
             </div>
+            <div className="mt-16 sm:mt-20">
+              <p className="mb-6 text-center text-base font-semibold text-amber-300 sm:text-lg">
+                Positions NAJ Prepares Candidates For
+              </p>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  title: 'SDR / BDR',
+                  subtitle: 'Sales Development Representative / Business Development Representative',
+                  definition: 'Entry-level role focused on lead generation, outreach, and booking meetings.',
+                  base: '$55K – $75K base',
+                  ote: '$70K – $100K OTE',
+                  skills: ['Ideal Customer Profile', 'Account Research', 'Proactive Outreach', 'Interviewing', 'Networking'],
+                  image: '/sdr-bdr.png',
+                },
+                {
+                  title: 'SMB / Mid-Market AE',
+                  subtitle: 'Account Executive',
+                  definition: 'Core closer role for smaller deals with faster sales cycles.',
+                  base: '$70K – $100K base',
+                  ote: '$110K – $200K OTE',
+                  skills: ['Consultative Selling', 'Negotiation', 'Executive Presence', 'Mock Call Prep', 'Pipeline Accuracy'],
+                  image: '/mid-market-ae.png',
+                },
+                {
+                  title: 'Enterprise AE',
+                  subtitle: 'Strategic Account Executive',
+                  definition: 'Closes large, complex deals with multiple stakeholders and long cycles.',
+                  base: '$100K – $150K+ base',
+                  ote: '$180K – $320K+ OTE',
+                  skills: ['Multi-threaded Selling', 'Stakeholder Management', 'Negotiation', 'Forecast Accuracy', 'Networking'],
+                  image: '/enterprise-ae.png',
+                },
+              ].map((role) => (
+                <div
+                  key={role.title}
+                  className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#140a26]/80 shadow-lg shadow-amber-900/10"
+                >
+                  <div className="relative aspect-[4/3] w-full overflow-hidden">
+                    <img
+                      src={role.image}
+                      alt={`${role.title} - ${role.subtitle}`}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col gap-4 p-6">
+                    <div>
+                      <h3 className="text-lg font-semibold text-amber-300 underline decoration-amber-300/60">{role.title}</h3>
+                      <p className="mt-1 text-sm text-slate-400">{role.subtitle}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-amber-300/90">Role Definition</p>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-300">{role.definition}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-amber-300/90">Typical Salaries</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <span className="rounded-lg bg-amber-400/20 px-3 py-1.5 text-sm font-medium text-amber-200">{role.base}</span>
+                        <span className="rounded-lg bg-amber-400/20 px-3 py-1.5 text-sm font-medium text-amber-200">{role.ote}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-amber-300/90">Skills Trained</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {role.skills.map((skill) => (
+                          <span key={skill} className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-200">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            </div>
           </div>
         </section>
 
         <section id="candidates" className="border-t border-white/10 bg-[#0f081d]/90">
-          <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-            <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
-              <div className="space-y-4 lg:pr-6">
-                <h2 className="text-3xl font-semibold tracking-tight">For Candidates</h2>
-                <p className="text-slate-300">
-                  We are former hiring managers who built and scaled high-performing tech sales teams.
-                  We know exactly what top SaaS companies look for on day one—and we help you deliver it from the start.
-                  That means you ramp faster, hit quota sooner, and unlock a higher earning ceiling right out of the gate.
-                </p>
-                <p className="text-slate-300">
-                  You&apos;ll master the skills that actually move the needle:
-                </p>
-                <ul className="list-disc space-y-1 pl-5 text-slate-300">
-                  <li>Building consistent pipeline</li>
-                  <li>Running sharp discovery calls</li>
-                  <li>Closing complex deals</li>
-                  <li>Managing stakeholders like a pro</li>
-                </ul>
-                <p className="text-slate-300">
-                  You&apos;ll craft a compelling tech sales story, refine your pitch to stand out in interviews, and get direct connections to hiring managers actively seeking hungry, coachable talent.
-                </p>
-                <p className="text-slate-300">
-                  Every candidate gets a fully personalized plan plus dedicated one-on-one coaching tailored to your background, goals, and timeline.
-                </p>
-                <p className="font-medium text-amber-300">
-                  Ready to stop guessing and start winning in tech sales?
-                </p>
-                <div className="rounded-xl border border-white/10 bg-[#140a26]/60 px-5 py-4">
-                  <h3 className="mb-3 text-base font-semibold uppercase tracking-wide text-amber-300 sm:text-lg">Our Structure</h3>
-                  <ul className="list-disc space-y-2 pl-5 text-sm text-slate-300">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+            <div className="mb-16 sm:mb-20">
+              <p className="text-base font-semibold uppercase tracking-[0.25em] text-amber-300">For Candidates</p>
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight">
+                We know what top Tech companies look for on day one—and we help you deliver it from the start.
+              </h2>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">
+                We are former hiring managers who built and scaled high-performing tech sales teams.
+                That means you ramp faster, hit quota sooner, and unlock a higher earning ceiling right out of the gate.
+              </p>
+            </div>
+
+            <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:items-start">
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-lg font-semibold text-amber-300">Skills that move the needle</h3>
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-slate-300">
+                    <li>Building consistent pipeline</li>
+                    <li>Running sharp discovery calls</li>
+                    <li>Closing complex deals</li>
+                    <li>Managing stakeholders like a pro</li>
+                  </ul>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-[#140a26]/60 px-6 py-5">
+                  <h3 className="text-base font-semibold uppercase tracking-wide text-amber-300 sm:text-lg">Our Structure</h3>
+                  <ul className="mt-4 space-y-2 text-sm text-slate-300">
                     <li><span className="font-medium text-slate-200">Build your ICP</span> — Define your ideal customer profile</li>
                     <li><span className="font-medium text-slate-200">Put together a target list</span> — Identify companies and roles that fit</li>
                     <li><span className="font-medium text-slate-200">Gather information</span> — Research accounts, stakeholders, and opportunities</li>
@@ -179,91 +251,25 @@ export default function Home() {
                     <li><span className="font-medium text-slate-200">Position yourself and win</span> — Stand out and land the role</li>
                   </ul>
                 </div>
+                <p className="text-lg font-medium text-amber-300">
+                  Ready to stop guessing and start winning in tech sales?
+                </p>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0f081d] to-amber-900/20 p-6 shadow-sm lg:ml-4">
-                <h3 className="text-lg font-semibold text-slate-100">Candidate Intake</h3>
-                <p className="mt-2 text-sm text-slate-300">
+              <div className="rounded-2xl border border-white/10 bg-[#140a26]/70 p-7 text-base text-slate-300 shadow-sm lg:sticky lg:top-8">
+                <h3 className="mb-2 text-lg font-semibold text-slate-100">Candidate Intake</h3>
+                <p className="mb-6 text-sm text-slate-300">
                   Share your LinkedIn profile and we will map out a plan to break into Tech sales.
                 </p>
                 <CandidateIntakeForm />
               </div>
             </div>
-            <div className="mt-10">
-              <p className="mb-6 text-center text-base font-semibold text-amber-300 sm:text-lg">
-                Positions NAJ Prepares Candidates For
+
+            <blockquote className="mt-20 border-l-4 border-amber-400/80 pl-6 sm:pl-8">
+              <p className="text-xl font-medium leading-relaxed text-amber-400 sm:text-2xl">
+                &ldquo;Before engaging with NAJ, I was stuck in limbo as a BDR. I couldn&apos;t break into AE roles at either company I worked for despite solid stats. Frustrated doesn&apos;t begin to describe how I felt. NAJ showed me how to shift my thinking and helped me land my first closing role.&rdquo;
               </p>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {[
-                  {
-                    title: 'SDR / BDR',
-                    subtitle: 'Sales Development Representative / Business Development Representative',
-                    definition: 'Entry-level role focused on lead generation, outreach, and booking meetings.',
-                    base: '$55K – $75K base',
-                    ote: '$70K – $100K OTE',
-                    skills: ['Ideal Customer Profile', 'Account Research', 'Proactive Outreach', 'Interviewing', 'Networking'],
-                    image: '/sdr-bdr.png',
-                  },
-                  {
-                    title: 'SMB / Mid-Market AE',
-                    subtitle: 'Account Executive',
-                    definition: 'Core closer role for smaller deals with faster sales cycles.',
-                    base: '$70K – $100K base',
-                    ote: '$110K – $200K OTE',
-                    skills: ['Consultative Selling', 'Negotiation', 'Executive Presence', 'Mock Call Prep', 'Pipeline Accuracy'],
-                    image: '/mid-market-ae.png',
-                  },
-                  {
-                    title: 'Enterprise AE',
-                    subtitle: 'Strategic Account Executive',
-                    definition: 'Closes large, complex deals with multiple stakeholders and long cycles.',
-                    base: '$100K – $150K+ base',
-                    ote: '$180K – $320K+ OTE',
-                    skills: ['Multi-threaded Selling', 'Stakeholder Management', 'Negotiation', 'Forecast Accuracy', 'Networking'],
-                    image: '/enterprise-ae.png',
-                  },
-                ].map((role) => (
-                  <div
-                    key={role.title}
-                    className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#140a26]/80 shadow-lg shadow-amber-900/10"
-                  >
-                    <div className="relative aspect-[4/3] w-full overflow-hidden">
-                      <img
-                        src={role.image}
-                        alt={`${role.title} - ${role.subtitle}`}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="flex flex-1 flex-col gap-4 p-6">
-                      <div>
-                        <h3 className="text-lg font-semibold text-amber-300 underline decoration-amber-300/60">{role.title}</h3>
-                        <p className="mt-1 text-sm text-slate-400">{role.subtitle}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-wider text-amber-300/90">Role Definition</p>
-                        <p className="mt-2 text-sm leading-relaxed text-slate-300">{role.definition}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-wider text-amber-300/90">Typical Salaries</p>
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          <span className="rounded-lg bg-amber-400/20 px-3 py-1.5 text-sm font-medium text-amber-200">{role.base}</span>
-                          <span className="rounded-lg bg-amber-400/20 px-3 py-1.5 text-sm font-medium text-amber-200">{role.ote}</span>
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-wider text-amber-300/90">Skills Trained</p>
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          {role.skills.map((skill) => (
-                            <span key={skill} className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-200">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+              <cite className="mt-4 block text-base not-italic text-amber-300/90">— James R.</cite>
+            </blockquote>
           </div>
         </section>
 
@@ -284,6 +290,12 @@ export default function Home() {
                   selecting positions that align with your skills, credentials, and experience, and developing the sales
                   skills required for these roles.
                 </p>
+                <blockquote className="mt-8 border-l-4 border-amber-400/80 pl-6">
+                  <p className="text-2xl font-medium leading-relaxed text-amber-400 sm:text-3xl">
+                    &ldquo;NAJ showed me that the skills and roles I held in the Army were valuable. They showed me how to find roles that would build on that. I owe NAJ tremendously and I recommend them to any transitioning military member going into sales.&rdquo;
+                  </p>
+                  <cite className="mt-3 block text-lg not-italic text-amber-300/90">— Andrew T.</cite>
+                </blockquote>
               </div>
               <div className="rounded-2xl border border-white/10 bg-[#140a26]/70 p-7 text-base text-slate-300 shadow-sm">
                 <div className="relative mb-6 aspect-video w-full overflow-hidden rounded-xl">
