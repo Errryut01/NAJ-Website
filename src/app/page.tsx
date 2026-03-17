@@ -15,7 +15,7 @@ const jsonLd = {
   "@type": "Organization",
   name: "NAJ",
   url: "https://networkajob.io",
-  description: "Tech sales recruiting and career coaching. Former hiring managers help candidates break into SDR, BDR, and AE roles. Veteran and minority owned.",
+  description: "Tech sales recruiting and career coaching. Former hiring managers help candidates break into SDR, BDR, and AE roles.",
   foundingDate: "2024",
   areaServed: "United States",
   serviceType: ["Recruiting", "Career Coaching", "Sales Training"],
@@ -45,9 +45,6 @@ export default function Home() {
                   <span className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-[3.75rem] font-semibold tracking-wide text-transparent sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Ferociously</span>
                 </div>
                 <div className="space-y-10">
-                  <p className="max-w-full break-words text-center text-base font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-lg sm:tracking-[0.25em] lg:tracking-[0.3em]">
-                    NAJ is a Veteran and Minority Owned Business
-                  </p>
                   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {[
                       {

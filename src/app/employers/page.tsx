@@ -23,11 +23,6 @@ export default function EmployersPage() {
       <MobileNav navItems={EMPLOYERS_NAV_ITEMS} />
 
       <main>
-        <div className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-6 sm:pt-12">
-          <p className="text-center text-lg font-semibold uppercase tracking-[0.3em] text-amber-300 sm:text-xl">
-            NAJ is a Veteran and Minority Owned Business
-          </p>
-        </div>
         <section className="bg-gradient-to-br from-[#0c071a] via-[#140a26] to-[#0c071a]">
           <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-20">
             <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">

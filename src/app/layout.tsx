@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s | NAJ",
   },
   description:
-    "NAJ helps candidates break into Tech sales and helps employers build revenue teams. Former hiring managers provide personalized coaching, interview prep, and proven playbooks. Veteran and minority owned.",
+    "NAJ helps candidates break into Tech sales and helps employers build revenue teams. Former hiring managers provide personalized coaching, interview prep, and proven playbooks.",
   keywords: [
     "tech sales recruiting",
     "SaaS sales careers",
@@ -29,7 +29,6 @@ export const metadata: Metadata = {
     "account executive",
     "sales coaching",
     "career coaching",
-    "veteran owned business",
     "GTM hiring",
     "sales hiring",
   ],
@@ -41,7 +40,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "NAJ",
     title: "NAJ | Tech Sales Recruiting & Career Coaching",
-    description: "Break into Tech sales or build your revenue team. Personalized coaching from former hiring managers. Veteran and minority owned.",
+    description: "Break into Tech sales or build your revenue team. Personalized coaching from former hiring managers.",
   },
   twitter: {
     card: "summary_large_image",
