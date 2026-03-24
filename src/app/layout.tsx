@@ -17,7 +17,7 @@ const SITE_URL = "https://networkajob.io";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "NAJ | Tech Sales Recruiting & Career Coaching | Network Ferociously",
+    default: "NAJ | Tech Sales Recruiting & Career Coaching",
     template: "%s | NAJ",
   },
   description:

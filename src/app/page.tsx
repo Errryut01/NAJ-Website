@@ -41,8 +41,13 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mb-32 mt-8 flex flex-col items-center text-center sm:mb-48 sm:mt-12">
-                  <span className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-[3.75rem] font-semibold tracking-wide text-transparent sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Network</span>
-                  <span className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-[3.75rem] font-semibold tracking-wide text-transparent sm:text-[6rem] md:text-[7.125rem] lg:text-[9.375rem]">Ferociously</span>
+                  <h1 className="max-w-4xl bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text px-4 text-3xl font-semibold leading-tight tracking-tight text-transparent sm:text-4xl md:text-5xl lg:text-6xl">
+                    Get the high-paying tech sales career you want.
+                  </h1>
+                  <p className="mt-5 max-w-2xl px-4 text-sm italic leading-relaxed text-slate-300 sm:text-base md:text-lg">
+                    Ambitious candidates and transitioning veterans land high-paying tech sales careers - with coaching,
+                    strategy, and warm introductions.
+                  </p>
                 </div>
                 <div className="space-y-10">
                   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -116,9 +121,9 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="mt-24 text-sm font-semibold uppercase tracking-[0.2em] text-amber-300">Candidate Career Partner</p>
-                <h1 className="text-4xl font-semibold tracking-tight text-slate-100 lg:text-5xl">
+                <h2 className="text-4xl font-semibold tracking-tight text-slate-100 lg:text-5xl">
                   Break into Tech sales with coaching, strategy, and a proven playbook.
-                </h1>
+                </h2>
                 <p className="text-lg text-slate-300">
                   NAJ helps candidates pivot into high-growth sales roles through personalized coaching,
                   interview prep, and targeted outreach. We guide you from first conversation to offer.
