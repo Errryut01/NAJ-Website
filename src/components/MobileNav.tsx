@@ -3,20 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { DEFAULT_NAV_ITEMS, type NavItem } from '@/config/nav'
+
+export { DEFAULT_NAV_ITEMS } from '@/config/nav'
 
 const CALENDAR_BOOK_URL = 'https://calendar.app.google/ca4jkCKsquRVsndB7'
-
-/** Home page anchors — labels match current homepage sections */
-export const DEFAULT_NAV_ITEMS = [
-  { id: 'home', label: 'Home', href: '#home' },
-  { id: 'candidates', label: 'Testimonials', href: '#candidates' },
-  { id: 'veterans', label: 'The cost of waiting', href: '#veterans' },
-  { id: 'team', label: 'Your first week', href: '#team' },
-  { id: 'employers-cta', label: 'Hiring managers', href: '#employers-cta' },
-  { id: 'contact', label: 'Contact', href: '#contact' },
-]
-
-type NavItem = { id: string; label: string; href: string }
 
 export default function MobileNav({ navItems = DEFAULT_NAV_ITEMS }: { navItems?: NavItem[] }) {
   const [isOpen, setIsOpen] = useState(false)

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import MobileNav, { DEFAULT_NAV_ITEMS } from '@/components/MobileNav'
+import MobileNav from '@/components/MobileNav'
+import { EMPLOYERS_NAV_ITEMS } from '@/config/nav'
 
 export const metadata = {
   title: "For Employers | Build Revenue Teams with GTM Talent",
@@ -8,15 +9,6 @@ export const metadata = {
     "NAJ partners with growth-stage companies to design roles, source top Tech sales candidates, and close hires that accelerate pipeline and revenue.",
   alternates: { canonical: "https://networkajob.io/employers" },
 };
-
-const EMPLOYERS_NAV_ITEMS = [
-  { id: 'home', label: 'Home', href: '/' },
-  ...DEFAULT_NAV_ITEMS.filter((i) => i.id !== 'home').map((item) => ({
-    ...item,
-    href: item.href.startsWith('#') ? `/${item.href}` : item.href,
-  })),
-  { id: 'employers-page', label: 'Employer services', href: '/employers' },
-]
 
 export default function EmployersPage() {
   return (
