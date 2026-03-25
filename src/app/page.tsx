@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { CandidateIntakeForm } from '@/components/CandidateIntakeForm'
 import { ContactForm } from '@/components/ContactForm'
 import MobileNav from '@/components/MobileNav'
 
@@ -48,55 +47,18 @@ export default function Home() {
                     Ambitious candidates and transitioning veterans land high-paying tech sales careers - with coaching,
                     strategy, and warm introductions.
                   </p>
-                </div>
-                <div className="space-y-10">
-                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {[
-                      {
-                        title: 'For Candidates',
-                        description: 'Build your Tech sales story, sharpen your pitch, and get connected to hiring managers looking for hungry, coachable talent. We will develop a plan using our proven method to address your skill gap and help you land the role you want.',
-                        href: '#candidates',
-                        image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
-                      },
-                      {
-                        title: 'For Transitioning Military',
-                        description: 'Translate military leadership into high-impact Tech sales careers. We help veterans map their experience to Tech sales roles. We will develop a plan using our proven method to address your skill gap and help you land the role you want.',
-                        href: '#veterans',
-                        image: '/transitioning-military.png',
-                      },
-                      {
-                        title: 'For Employers',
-                        description: 'Build revenue teams with proven GTM talent. We design roles, source top candidates, and close hires that accelerate pipeline.',
-                        href: '/employers',
-                        image: 'https://images.unsplash.com/photo-1521790797524-b2497295b8a0?auto=format&fit=crop&w=800&q=80',
-                      },
-                    ].map((item) => (
-                      <a
-                        key={item.title}
-                        href={item.href}
-                        className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-lg transition-shadow hover:shadow-xl"
-                      >
-                        <div className="relative aspect-[4/3] w-full overflow-hidden">
-                          <img
-                            src={item.image}
-                            alt=""
-                            className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                          />
-                        </div>
-                        <div className="flex flex-1 flex-col p-6">
-                          <h3 className="mb-3 text-lg font-semibold text-slate-900">{item.title}</h3>
-                          <p className="mb-4 flex-1 text-sm text-slate-600">{item.description}</p>
-                          <span className="text-sm font-medium text-amber-600 underline decoration-amber-600/50 underline-offset-2 group-hover:text-amber-500">
-                            Learn More
-                          </span>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                  <p className="mt-10 max-w-full break-words text-center text-sm font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-base sm:tracking-[0.25em] lg:tracking-[0.3em]">
+                  <a
+                    href="https://calendar.app.google/ca4jkCKsquRVsndB7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-8 inline-flex rounded-md bg-amber-400 px-6 py-3 text-sm font-semibold text-[#0c071a] shadow-sm transition-colors hover:bg-amber-300"
+                  >
+                    Book your free strategy call
+                  </a>
+                  <p className="mt-48 max-w-full break-words text-center text-sm font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-base sm:tracking-[0.25em] lg:tracking-[0.3em]">
                     Our mentees have launched careers at top tech companies
                   </p>
-                  <div className="grid w-full min-w-0 grid-cols-1 gap-4 rounded-2xl border border-white/10 bg-white/90 p-4 sm:grid-cols-2 sm:p-6 lg:grid-cols-4">
+                  <div className="mt-6 grid w-full min-w-0 max-w-6xl grid-cols-1 gap-4 rounded-2xl border border-white/10 bg-white/90 p-4 sm:grid-cols-2 sm:p-6 lg:grid-cols-4">
                     {[
                       { label: 'Amazon Web Services', type: 'logo', src: '/logo-aws.png', className: 'h-[10.5rem] w-auto max-w-[15rem] sm:h-40 sm:max-w-[26rem]' },
                       { label: 'Couchbase', type: 'logo', src: '/logo-couchbase.png', className: 'h-[9rem] w-auto max-w-[12rem] sm:h-36 sm:max-w-[24rem]' },
@@ -120,20 +82,115 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-                <p className="mt-24 text-sm font-semibold uppercase tracking-[0.2em] text-amber-300">Candidate Career Partner</p>
-                <h2 className="text-4xl font-semibold tracking-tight text-slate-100 lg:text-5xl">
-                  Break into Tech sales with coaching, strategy, and a proven playbook.
-                </h2>
-                <p className="text-lg text-slate-300">
-                  NAJ helps candidates pivot into high-growth sales roles through personalized coaching,
-                  interview prep, and targeted outreach. We guide you from first conversation to offer.
-                </p>
-                <div className="flex flex-wrap gap-3">
+                <div className="mx-auto mt-16 w-full max-w-6xl space-y-6 px-4 text-left sm:mt-20 sm:px-6">
+                  <h2 className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-left text-4xl font-semibold tracking-tight text-transparent lg:text-5xl">
+                    The transition is harder than it should be.
+                  </h2>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    Maybe you&apos;ve been sending applications into the void — qualified on paper, but never getting the call back.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    Maybe you served your country, built real leadership skills, and now feel completely invisible to an industry that should be lining up to hire you.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    Maybe you&apos;re already in tech sales but stuck — passed over for promotion, under-coached, underpaid, watching less capable people move up while you grind in place.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    The role is different for everyone. But the feeling is the same.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    <span className="font-bold text-slate-100">Frustration.</span> You&apos;ve done everything right and it&apos;s not working.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    <span className="font-bold text-slate-100">Disappointment.</span> The career you pictured hasn&apos;t materialized the way you expected.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    That nagging sense that you&apos;re one introduction, one conversation, one right move away — if you only knew what that move was.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    Here&apos;s the truth: breaking into tech sales — or breaking through to the next level — isn&apos;t about working harder. It&apos;s about having the right map, the right preparation, and access to the right rooms.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    Most people are trying to figure that out alone.
+                  </p>
+                  <p className="text-lg font-bold leading-relaxed text-amber-300 sm:text-xl">
+                    That&apos;s the problem NAJ solves.
+                  </p>
+                </div>
+                <div className="mx-auto mt-16 w-full max-w-6xl space-y-6 px-4 sm:mt-20 sm:px-6">
+                  <h2 className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-left text-4xl font-semibold tracking-tight text-transparent lg:text-5xl">
+                    NAJ was built for this exact moment in your career.
+                  </h2>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    Most recruiting firms have never sold software. Most career coaches have never carried a quota. Most
+                    job boards don&apos;t know the difference between an SDR and an AE — let alone what it takes to become
+                    one.
+                  </p>
+                  <p className="text-lg font-bold leading-relaxed text-amber-300">
+                    NAJ is different.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    We&apos;re a team of tech sales insiders who have sat in the seats we&apos;re placing you into.
+                    We&apos;ve carried quotas, built pipelines, managed enterprise accounts, and led sales development
+                    teams at companies like Pure Storage, Hitachi Digital, and CDW. We know what top hiring managers look
+                    for on day one — because we&apos;ve been those hiring managers.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    We built NAJ because the transition into tech sales shouldn&apos;t require luck, connections you
+                    don&apos;t have, or years of trial and error. It should require the right guide.
+                  </p>
+                  <p className="text-lg font-bold leading-relaxed text-amber-300">
+                    That&apos;s us.
+                  </p>
+                  <p className="text-lg leading-relaxed text-slate-300">
+                    We&apos;ve placed candidates into roles at Amazon, Cisco, Dell, Oracle, Fortinet, and more. We know
+                    which companies are hiring, what they&apos;re actually looking for, and how to position you to win.
+                  </p>
+                  <p className="text-lg font-semibold leading-relaxed text-slate-100">
+                    You bring the drive. We bring the playbook.
+                  </p>
                   <a
-                    href="#contact"
-                    className="rounded-md bg-amber-400 px-5 py-3 text-sm font-semibold text-[#0c071a] shadow-sm hover:bg-amber-300"
+                    href="https://calendar.app.google/ca4jkCKsquRVsndB7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex rounded-md bg-amber-400 px-6 py-3 text-sm font-semibold text-[#0c071a] shadow-sm transition-colors hover:bg-amber-300"
                   >
-                  Start Your Plan
+                    Book Your Free Strategy Call
+                  </a>
+                </div>
+                <div className="mx-auto mt-24 w-full max-w-6xl space-y-8 px-4 sm:px-6">
+                  <h2 className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-left text-4xl font-semibold tracking-tight text-transparent lg:text-5xl">
+                    Three steps to your tech sales career.
+                  </h2>
+                  <div className="space-y-8">
+                    <div>
+                      <h3 className="text-lg font-semibold text-amber-300 sm:text-xl">Step 1 — Apply</h3>
+                      <p className="mt-2 text-lg leading-relaxed text-slate-300">
+                        Tell us where you are and where you want to go. We&apos;ll assess your background and map out a
+                        clear path forward.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-amber-300 sm:text-xl">Step 2 — Get Coached</h3>
+                      <p className="mt-2 text-lg leading-relaxed text-slate-300">
+                        Resume. LinkedIn. Interview prep. Pitch coaching. We&apos;ll make sure you show up to every
+                        opportunity looking like the top candidate — because you are.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-amber-300 sm:text-xl">Step 3 — Land Your Career</h3>
+                      <p className="mt-2 text-lg leading-relaxed text-slate-300">
+                        Put the skills you&apos;ve learned to work — for you.
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    href="https://calendar.app.google/ca4jkCKsquRVsndB7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex rounded-md bg-amber-400 px-6 py-3 text-sm font-semibold text-[#0c071a] shadow-sm transition-colors hover:bg-amber-300"
+                  >
+                    Book Your Free Strategy Call
                   </a>
                 </div>
 
@@ -220,114 +277,111 @@ export default function Home() {
 
         <section id="candidates" className="border-t border-white/10 bg-[#0f081d]/90">
           <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-            <div className="mb-16 sm:mb-20">
-              <p className="text-base font-semibold uppercase tracking-[0.25em] text-amber-300">For Candidates</p>
-              <h2 className="mt-3 text-4xl font-semibold tracking-tight">
-                We know what top Tech companies look for on day one—and we help you deliver it from the start.
-              </h2>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">
-                We are former hiring managers who built and scaled high-performing tech sales teams.
-                That means you ramp faster, hit quota sooner, and unlock a higher earning ceiling right out of the gate.
-              </p>
-            </div>
-
-            <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:items-start">
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-lg font-semibold text-amber-300">Skills that move the needle</h3>
-                  <ul className="mt-3 list-disc space-y-2 pl-5 text-slate-300">
-                    <li>Building consistent pipeline</li>
-                    <li>Running sharp discovery calls</li>
-                    <li>Closing complex deals</li>
-                    <li>Managing stakeholders like a pro</li>
-                  </ul>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-[#140a26]/60 px-6 py-5">
-                  <h3 className="text-base font-semibold uppercase tracking-wide text-amber-300 sm:text-lg">Our Structure</h3>
-                  <ul className="mt-4 space-y-2 text-sm text-slate-300">
-                    <li><span className="font-medium text-slate-200">Build your ICP</span> — Define your ideal customer profile</li>
-                    <li><span className="font-medium text-slate-200">Put together a target list</span> — Identify companies and roles that fit</li>
-                    <li><span className="font-medium text-slate-200">Gather information</span> — Research accounts, stakeholders, and opportunities</li>
-                    <li><span className="font-medium text-slate-200">Build a network</span> — Connect with hiring managers and insiders</li>
-                    <li><span className="font-medium text-slate-200">Cultivate champions</span> — Develop advocates who will vouch for you</li>
-                    <li><span className="font-medium text-slate-200">Position yourself and win</span> — Stand out and land the role</li>
-                  </ul>
-                </div>
-                <p className="text-lg font-medium text-amber-300">
-                  Ready to stop guessing and start winning in tech sales?
+            <h2 className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-left text-4xl font-semibold tracking-tight text-transparent lg:text-5xl">
+              Don&apos;t take our word for it.
+            </h2>
+            <div className="mt-12 space-y-12">
+              <blockquote className="border-l-4 border-amber-400/80 pl-6 sm:pl-8">
+                <p className="text-xl font-medium leading-relaxed text-amber-400 sm:text-2xl">
+                  &ldquo;Before engaging with NAJ, I was stuck in limbo as a BDR. I couldn&apos;t break into AE roles at
+                  other companies I worked for despite solid stats. NAJ began to describe how I felt. They showed me how
+                  to develop my skill sets and helped me land my first closing role.&rdquo;
                 </p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-[#140a26]/70 p-7 text-base text-slate-300 shadow-sm lg:sticky lg:top-8">
-                <h3 className="mb-2 text-lg font-semibold text-slate-100">Candidate Intake</h3>
-                <p className="mb-6 text-sm text-slate-300">
-                  Share your LinkedIn profile and we will map out a plan to break into Tech sales.
+                <cite className="mt-4 block text-base not-italic text-amber-300/90">— James T.</cite>
+              </blockquote>
+              <blockquote className="border-l-4 border-amber-400/80 pl-6 sm:pl-8">
+                <p className="text-xl font-medium leading-relaxed text-amber-400 sm:text-2xl">
+                  &ldquo;NAJ showed me that the skills and roles I held in the Army were valuable. They showed me how to
+                  find roles that would build on that. I owe NAJ tremendously and I recommend them to any transitioning
+                  military member going into sales.&rdquo;
                 </p>
-                <CandidateIntakeForm />
-              </div>
+                <cite className="mt-4 block text-base not-italic text-amber-300/90">— Andrew T.</cite>
+              </blockquote>
             </div>
-
-            <blockquote className="mt-20 border-l-4 border-amber-400/80 pl-6 sm:pl-8">
-              <p className="text-xl font-medium leading-relaxed text-amber-400 sm:text-2xl">
-                &ldquo;Before engaging with NAJ, I was stuck in limbo as a BDR. I couldn&apos;t break into AE roles at either company I worked for despite solid stats. Frustrated doesn&apos;t begin to describe how I felt. NAJ showed me how to shift my thinking and helped me land my first closing role.&rdquo;
-              </p>
-              <cite className="mt-4 block text-base not-italic text-amber-300/90">— James R.</cite>
-            </blockquote>
           </div>
         </section>
 
         <section id="veterans" className="border-t border-white/10 bg-[#0f081d]/90">
-          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-20">
-            <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-              <div className="space-y-5">
-                <p className="text-base font-semibold uppercase tracking-[0.25em] text-amber-300">
-                  For Transitioning Veterans
-                </p>
-                <h2 className="text-4xl font-semibold tracking-tight">
-                  Translate military leadership into high-impact Tech sales careers.
-                </h2>
-                <p className="text-lg text-slate-300">
-                  We help veterans map their experience to Tech sales roles, build a compelling story, and practice the
-                  skills needed to win interviews and succeed on day one. Our approach includes identifying your
-                  marketable skills, translating your military experience into language hiring managers understand,
-                  selecting positions that align with your skills, credentials, and experience, and developing the sales
-                  skills required for these roles.
-                </p>
-                <blockquote className="mt-8 border-l-4 border-amber-400/80 pl-6">
-                  <p className="text-2xl font-medium leading-relaxed text-amber-400 sm:text-3xl">
-                    &ldquo;NAJ showed me that the skills and roles I held in the Army were valuable. They showed me how to find roles that would build on that. I owe NAJ tremendously and I recommend them to any transitioning military member going into sales.&rdquo;
-                  </p>
-                  <cite className="mt-3 block text-lg not-italic text-amber-300/90">— Andrew T.</cite>
-                </blockquote>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-[#140a26]/70 p-7 text-base text-slate-300 shadow-sm">
-                <div className="relative mb-6 aspect-video w-full overflow-hidden rounded-xl">
-                  <iframe
-                    className="absolute inset-0 h-full w-full"
-                    src="https://www.youtube-nocookie.com/embed/PBs7rsN58LI?rel=0"
-                    title="For Transitioning Veterans"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold text-slate-100">Veteran Intake</h3>
-                <p className="mb-4 text-sm text-slate-300">
-                  Share your LinkedIn profile and we will map out a plan to transition into Tech sales.
-                </p>
-                <CandidateIntakeForm formType="Veteran Intake" />
-              </div>
-            </div>
+          <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-16 sm:px-6 sm:py-24">
+            <h2 className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-left text-4xl font-semibold tracking-tight text-transparent lg:text-5xl">
+              The longer you wait, the more it costs you.
+            </h2>
+            <p className="text-lg leading-relaxed text-slate-300">
+              Every month without the right role is a month of income you&apos;ll never get back. Every year stuck at the
+              wrong level is a year of momentum, promotions, and earning potential lost.
+            </p>
+            <p className="text-lg leading-relaxed text-slate-300">
+              The people who break through — whether they&apos;re transitioning into tech sales for the first time or
+              finally moving up after years of being overlooked — share one thing in common: they stopped trying to figure
+              it out alone.
+            </p>
+            <p className="text-lg leading-relaxed text-slate-300">
+              They had the right guide. The right preparation. The right introductions.
+            </p>
+            <p className="text-lg leading-relaxed text-slate-300">
+              The candidates who don&apos;t? They settle. They take the role that&apos;s two levels below what they&apos;re
+              worth. They stay stuck on a team that doesn&apos;t invest in them. They keep sending applications that go
+              nowhere — and start wondering if the problem is them.
+            </p>
+            <p className="text-lg font-semibold leading-relaxed text-slate-100">
+              It&apos;s not you. It&apos;s the approach.
+            </p>
+            <p className="text-lg font-bold leading-relaxed text-amber-300">
+              That&apos;s exactly what NAJ is built to change.
+            </p>
+            <a
+              href="https://calendar.app.google/ca4jkCKsquRVsndB7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex rounded-md bg-amber-400 px-6 py-3 text-sm font-semibold text-[#0c071a] shadow-sm transition-colors hover:bg-amber-300"
+            >
+              Book Your Free Strategy Call
+            </a>
           </div>
         </section>
 
         <section id="team" className="border-t border-white/10 bg-[#0f081d]/90">
-          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-            <div className="space-y-6 text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-300">About the Team</p>
-              <h2 className="text-3xl font-semibold tracking-tight">People first recruiting and coaching with domain expertise.</h2>
-              <p className="mx-auto max-w-3xl text-left text-slate-300">
-                Our coaching is built on over 20 years of GTM tech sales experience—from individual contributor roles through leadership. We offer personalized career strategy, interview preparation, and hands-on skill development tailored to each candidate&apos;s goals. For organizations looking to staff GTM roles, this depth of experience means we understand what success looks like in the field: we can identify candidates who will ramp quickly, build pipeline, and close business. We blend GTM hiring expertise with a hands-on, high-touch approach to recruiting and coaching.
-              </p>
-            </div>
+          <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-16 sm:px-6 sm:py-24">
+            <h2 className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-left text-4xl font-semibold tracking-tight text-transparent lg:text-5xl">
+              Imagine your first week.
+            </h2>
+            <p className="text-lg leading-relaxed text-slate-300">
+              You&apos;re onboarding at a company you&apos;ve actually heard of. The comp is real. The team is sharp. And
+              for the first time since leaving service, you&apos;re in an environment that rewards exactly how you&apos;re
+              wired — mission-focused, disciplined, built to win.
+            </p>
+            <p className="text-lg font-bold leading-relaxed text-amber-300">
+              That&apos;s not a dream. That&apos;s what NAJ candidates do.
+            </p>
+            <a
+              href="https://calendar.app.google/ca4jkCKsquRVsndB7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex rounded-md bg-amber-400 px-6 py-3 text-sm font-semibold text-[#0c071a] shadow-sm transition-colors hover:bg-amber-300"
+            >
+              Book Your Free Strategy Call
+            </a>
+          </div>
+        </section>
+
+        <section id="employers-cta" className="border-t border-white/10 bg-[#0f081d]/90">
+          <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-16 sm:px-6 sm:py-24">
+            <h2 className="bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-left text-4xl font-semibold tracking-tight text-transparent lg:text-5xl">
+              Hiring managers — meet your next top performer.
+            </h2>
+            <p className="text-lg leading-relaxed text-slate-300">
+              Our Candidates don&apos;t need to be trained to show up on time, handle rejection, or operate under
+              pressure. They need to be handed a quota and a territory.
+            </p>
+            <p className="text-lg leading-relaxed text-slate-300">
+              If you&apos;re building a GTM team and want candidates who are wired differently — reach out.
+            </p>
+            <a
+              href="/employers"
+              className="inline-flex text-lg font-semibold text-amber-400 underline decoration-amber-400/60 underline-offset-4 transition-colors hover:text-amber-300 hover:decoration-amber-300"
+            >
+              Learn About Hiring NAJ Candidates →
+            </a>
           </div>
         </section>
 
@@ -349,10 +403,12 @@ export default function Home() {
       <footer className="border-t border-white/10 bg-[#0f081d]/90">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-4 py-6 text-sm text-slate-400 sm:px-6 md:flex-row">
           <span>© 2026 NAJ. All rights reserved.</span>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <a href="#home" className="hover:text-white">Home</a>
-            <a href="/employers" className="hover:text-white">Employers</a>
-            <a href="#candidates" className="hover:text-white">Candidates</a>
+            <a href="#candidates" className="hover:text-white">Testimonials</a>
+            <a href="#employers-cta" className="hover:text-white">Hiring managers</a>
+            <a href="/employers" className="hover:text-white">Employer services</a>
+            <a href="#contact" className="hover:text-white">Contact</a>
           </div>
         </div>
       </footer>

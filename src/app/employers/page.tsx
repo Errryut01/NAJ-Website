@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import MobileNav from '@/components/MobileNav'
+import MobileNav, { DEFAULT_NAV_ITEMS } from '@/components/MobileNav'
 
 export const metadata = {
   title: "For Employers | Build Revenue Teams with GTM Talent",
@@ -11,10 +11,11 @@ export const metadata = {
 
 const EMPLOYERS_NAV_ITEMS = [
   { id: 'home', label: 'Home', href: '/' },
-  { id: 'employers', label: 'For Employers', href: '/employers' },
-  { id: 'candidates', label: 'For Candidates', href: '/#candidates' },
-  { id: 'team', label: 'About/Team', href: '/#team' },
-  { id: 'contact', label: 'Contact/Action', href: '/#contact' },
+  ...DEFAULT_NAV_ITEMS.filter((i) => i.id !== 'home').map((item) => ({
+    ...item,
+    href: item.href.startsWith('#') ? `/${item.href}` : item.href,
+  })),
+  { id: 'employers-page', label: 'Employer services', href: '/employers' },
 ]
 
 export default function EmployersPage() {
