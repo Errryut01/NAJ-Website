@@ -58,28 +58,53 @@ export default function Home() {
                   <p className="mt-48 max-w-full break-words text-center text-sm font-semibold uppercase tracking-[0.15em] text-amber-300 sm:text-base sm:tracking-[0.25em] lg:tracking-[0.3em]">
                     Our mentees have launched careers at top tech companies
                   </p>
-                  <div className="mt-6 grid w-full min-w-0 max-w-6xl grid-cols-1 gap-4 rounded-2xl border border-white/10 bg-white/90 p-4 sm:grid-cols-2 sm:p-6 lg:grid-cols-4">
-                    {[
-                      { label: 'Amazon Web Services', type: 'logo', src: '/logo-aws.png', className: 'h-[10.5rem] w-auto max-w-[15rem] sm:h-40 sm:max-w-[26rem]' },
-                      { label: 'Couchbase', type: 'logo', src: '/logo-couchbase.png', className: 'h-[9rem] w-auto max-w-[12rem] sm:h-36 sm:max-w-[24rem]' },
-                      { label: 'Dell', type: 'logo', src: '/logo-dell.png', className: 'h-[7.5rem] w-auto max-w-[10.5rem] sm:h-32 sm:max-w-[20rem]' },
-                      { label: 'Cisco', type: 'logo', src: '/logo-cisco-v3.png', className: 'h-[9rem] w-auto max-w-[13.5rem] sm:h-36 sm:max-w-[28rem]' },
-                      { label: 'Fortinet', type: 'logo', src: '/logo-fortinet.png', className: 'h-[9rem] w-auto max-w-[13.5rem] sm:h-36 sm:max-w-[28rem]' },
-                      { label: 'NetApp', type: 'logo', src: '/logo-netapp.png', className: 'h-[7.5rem] w-auto max-w-[10.5rem] sm:h-32 sm:max-w-[20rem]' },
-                      { label: 'Oracle', type: 'logo', src: '/logo-oracle.png', className: 'h-[7.5rem] w-auto max-w-[21rem] object-contain sm:h-28 sm:max-w-[22rem]' },
-                      { label: 'mongoDB', type: 'logo', src: '/logo-mongodb.png', className: 'h-[9rem] w-auto max-w-[12rem] sm:h-36 sm:max-w-[24rem]' },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className="flex w-full min-w-0 items-center justify-center rounded-xl border border-transparent bg-transparent px-4 py-8 text-center text-sm font-semibold text-slate-900 sm:py-10"
-                      >
-                        {item.type === 'logo' ? (
-                          <img src={item.src} alt={`${item.label} logo`} className={item.className} />
-                        ) : (
-                          item.label
-                        )}
+                  <div className="mt-6 w-full min-w-0 max-w-6xl rounded-2xl border border-white/10 bg-white/90 p-4 sm:p-6">
+                    <div className="naj-marquee sm:hidden">
+                      <div className="naj-marquee-track w-max items-center">
+                        {[
+                          { label: 'Amazon Web Services', src: '/logo-aws.png' },
+                          { label: 'Couchbase', src: '/logo-couchbase.png' },
+                          { label: 'Dell', src: '/logo-dell.png' },
+                          { label: 'Cisco', src: '/logo-cisco-v3.png' },
+                          { label: 'Fortinet', src: '/logo-fortinet.png' },
+                          { label: 'NetApp', src: '/logo-netapp.png' },
+                          { label: 'Oracle', src: '/logo-oracle.png' },
+                          { label: 'mongoDB', src: '/logo-mongodb.png' },
+                          { label: 'Amazon Web Services', src: '/logo-aws.png' },
+                          { label: 'Couchbase', src: '/logo-couchbase.png' },
+                          { label: 'Dell', src: '/logo-dell.png' },
+                          { label: 'Cisco', src: '/logo-cisco-v3.png' },
+                          { label: 'Fortinet', src: '/logo-fortinet.png' },
+                          { label: 'NetApp', src: '/logo-netapp.png' },
+                          { label: 'Oracle', src: '/logo-oracle.png' },
+                          { label: 'mongoDB', src: '/logo-mongodb.png' },
+                        ].map((item, index) => (
+                          <div key={`${item.label}-${index}`} className="flex h-28 w-44 shrink-0 items-center justify-center">
+                            <img src={item.src} alt={`${item.label} logo`} className="max-h-20 w-auto max-w-full object-contain" />
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
+
+                    <div className="hidden grid-cols-2 gap-4 sm:grid lg:grid-cols-4">
+                      {[
+                        { label: 'Amazon Web Services', src: '/logo-aws.png', className: 'h-[10.5rem] w-auto max-w-[15rem] sm:h-40 sm:max-w-[26rem]' },
+                        { label: 'Couchbase', src: '/logo-couchbase.png', className: 'h-[9rem] w-auto max-w-[12rem] sm:h-36 sm:max-w-[24rem]' },
+                        { label: 'Dell', src: '/logo-dell.png', className: 'h-[7.5rem] w-auto max-w-[10.5rem] sm:h-32 sm:max-w-[20rem]' },
+                        { label: 'Cisco', src: '/logo-cisco-v3.png', className: 'h-[9rem] w-auto max-w-[13.5rem] sm:h-36 sm:max-w-[28rem]' },
+                        { label: 'Fortinet', src: '/logo-fortinet.png', className: 'h-[9rem] w-auto max-w-[13.5rem] sm:h-36 sm:max-w-[28rem]' },
+                        { label: 'NetApp', src: '/logo-netapp.png', className: 'h-[7.5rem] w-auto max-w-[10.5rem] sm:h-32 sm:max-w-[20rem]' },
+                        { label: 'Oracle', src: '/logo-oracle.png', className: 'h-[7.5rem] w-auto max-w-[21rem] object-contain sm:h-28 sm:max-w-[22rem]' },
+                        { label: 'mongoDB', src: '/logo-mongodb.png', className: 'h-[9rem] w-auto max-w-[12rem] sm:h-36 sm:max-w-[24rem]' },
+                      ].map((item) => (
+                        <div
+                          key={item.label}
+                          className="flex w-full min-w-0 items-center justify-center rounded-xl border border-transparent bg-transparent px-4 py-8 text-center text-sm font-semibold text-slate-900 sm:py-10"
+                        >
+                          <img src={item.src} alt={`${item.label} logo`} className={`${item.className} object-contain`} />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="mx-auto mt-16 w-full max-w-6xl space-y-6 px-4 text-left sm:mt-20 sm:px-6">
